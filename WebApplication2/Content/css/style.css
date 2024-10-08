@@ -18,7 +18,7 @@ hr {
     margin-top: 70px;
 }
 .top-bar {
-    background-color: #ff7361;
+    background-color: #1a73e8;
     padding: 1px;
 }
 .navbar-menu-left-side239 {
@@ -117,30 +117,29 @@ hr {
 }
 
 .navbar-serch-right-side .btn-default2913 {
-    color: #333;
-    background-color: #f55f4c;
-    border-color: #f55f4c;
+    color: purple;
+    background-color: #1a73e8;
+    border-color: #fff;
 }
 
 .navbar-serch-right-side .btn-default2913:hover {
     color: #fff;
-    background-color: #ff7361;
-    border-color: #ff7361;
+      border-color: white;
     outline: none;
 }
 
 .navbar-serch-right-side .btn-default2913:focus,
 .navbar-serch-right-side .btn-default2913.focus {
     color: #fff;
-    background-color: #e26958;
+    background-color: #1a73e8;
     border-color: #e26958;
     outline: none;
 }
 
 .navbar-serch-right-side .btn-default2913:hover {
     color: #fff;
-    background-color: #e26958;
-    border-color: #e26958;
+    background-color: #1a73e8;
+    border-color: #fff;
     outline: none;
 }
 
@@ -178,21 +177,27 @@ hr {
 
 /*==========top-menu-bottom932===========*/
 
-
-
 .navbar-default {
-    background-color: #2F3239;
-    border-color: #2F3239;
+    background-color: white ;
+    
     padding: 20px;
+}
+
+.navbar-header {
+    height: 100%;
+    width: auto
 }
 
 .navbar-brand > img {
     display: block;
-    margin-top: -20px;
+    margin-top: -40px;
+    margin-left: -40px;
+    height: 100%;
+    width: auto
 }
 
 .navbar-default .navbar-nav > li > a {
-    color: #fff;
+    color: #de0405;
     padding: 8px 25px 8px 25px;
     margin:5px 0px;
     border-radius: 3px;
@@ -205,7 +210,7 @@ hr {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #fff;
-    background-color: #ff7361;
+    background-color: #1a73e8;
     border-radius: 3px;
     padding: 8px 25px 8px 25px;
 }
@@ -214,14 +219,14 @@ hr {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
     color: #fff;
-    background-color: #ff7361;
+    background-color: #1a73e8;
 }
 
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
     color: #fff;
-    background-color: #ff7361;
+    background-color: #1a73e8;
 }
 
 .dropdown-menu > li > a:hover,
@@ -265,7 +270,7 @@ hr {
 }
 
 .welcome-part-one {
-    background-color: #FF7361;
+    background-color: #1a73e8;
     padding-top: 51px;
     margin-top: -20px;
     padding-bottom: 35px;
@@ -464,11 +469,11 @@ hr {
 }
 
 #main>input:checked + label {
-    color: #555;
-    border: 1px solid #FF7361;
-    border-top: 2px solid #FF7361;
-    border-bottom: 1px solid #FF7361;
-    background-color: #FF7361;
+    color: white;
+    border: 1px solid #1a73e8;
+    border-top: 2px solid #1a73e8;
+    border-bottom: 1px solid #1a73e8;
+    background-color: #1a73e8;
 }
 
 #tab1:checked ~ #content1,
@@ -1432,7 +1437,7 @@ h5:hover {
 
 .header-descriptin329 {
     padding: 2px;
-    background-color: #FF7361;
+    background-color: #1a73e8;
     margin-top: -20px;
 }
 
@@ -1473,7 +1478,7 @@ h5:hover {
 
 .form-description43 {
     margin-right: 108px;
-    color: #fd7362;
+    color: #de0405;
     font-family: fontawesome;
     font-weight: bold;
 }
@@ -1495,7 +1500,7 @@ h5:hover {
 
 .form-description442 {
     margin-right: 130px;
-    color: #fd7362;
+    color: #de0405;
     font-family: fontawesome;
     font-weight: bold;
 }
@@ -1517,7 +1522,7 @@ h5:hover {
 
 .form-description433 {
     margin-right: 90px;
-    color: #fd7362;
+    color: #de0405;
     font-family: fontawesome;
     font-weight: bold;
 }
@@ -1539,7 +1544,7 @@ h5:hover {
 
 .form-description4342 {
     margin-right: 90px;
-    color: #fd7362;
+    color: #de0405;
     font-family: fontawesome;
     font-weight: bold;
 }
@@ -1550,7 +1555,7 @@ h5:hover {
 
 .form-description43305 {
     margin-right: 117px;
-    color: #fd7362;
+    color: #de0405;
     font-family: fontawesome;
     font-weight: bold;
 }
@@ -1561,7 +1566,7 @@ h5:hover {
 
 .form-description23993 {
     margin-right: 106px;
-    color: #fd7362;
+    color: #de0405;
     font-family: fontawesome;
     font-weight: bold;
     float: left;
@@ -1607,7 +1612,7 @@ h5:hover {
     padding: 5px 15px 5px 15px;
     width: 100%;
     color: #fff;
-    background-color: #FF7361;
+    background-color: #1a73e8;
     border: none;
     border-radius: 3px;
     font-weight: bold;
