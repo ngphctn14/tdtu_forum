@@ -13,10 +13,10 @@ namespace WebApplication2.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ForumnManagerEntities : DbContext
+    public partial class ForumnManagerEntities2 : DbContext
     {
-        public ForumnManagerEntities()
-            : base("name=ForumnManagerEntities")
+        public ForumnManagerEntities2()
+            : base("name=ForumnManagerEntities2")
         {
         }
     
@@ -25,7 +25,12 @@ namespace WebApplication2.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<attachment> attachments { get; set; }
         public virtual DbSet<category> categories { get; set; }
-        public virtual DbSet<menu> menus { get; set; }
+        public virtual DbSet<comment> comments { get; set; }
+        public virtual DbSet<post> posts { get; set; }
+        public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<welcome_home> welcome_home { get; set; }
+        public virtual DbSet<NEWS> NEWS { get; set; }
     }
 }

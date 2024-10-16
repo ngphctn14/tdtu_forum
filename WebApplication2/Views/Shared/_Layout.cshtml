@@ -18,6 +18,7 @@
     <link href="css/animate.css" rel="stylesheet" type="text/css">
     <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/css/responsive.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/Content/css/loginstyle.css">
 </head>
 
 <body>
@@ -28,9 +29,9 @@
                 <div class="col-md-6">
                     <div class="navbar-menu-left-side239">
                         <ul>
-                            <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
+                            <li><a href="@Url.Action("Index", "Contact")"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
                             <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
-                            <li><a href="logIn.html"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
+                            <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,7 +60,7 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/Content/image/logo1.png" alt="Logo" style="width: 100px; height: 100px"></a>
-                    <a href="@Url.Action("Index", "Home")" style="font-weight: 700;color: #DE0405;font-family: 'Nunito',sans-serif;font-size: 18.5px; display:inline-block; margin-top:10px" >ĐẠI HỌC TÔN ĐỨC THẮNG</a>
+                    <a href="@Url.Action("Index", "Home")" style="font-weight: 700;color: #DE0405;font-family: 'Nunito',sans-serif;font-size: 18.5px; display:inline-block; margin-top:10px">ĐẠI HỌC TÔN ĐỨC THẮNG</a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -70,23 +71,22 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Question <span class="caret"></span></a>
                             <ul class="dropdown-menu animated zoomIn">
-                          @{Html.RenderAction("getDetails", "Category");}
+                                @{Html.RenderAction("getDetails", "Category");}
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Page <span class="caret"></span></a>
                             <ul class="dropdown-menu animated zoomIn">
                                 <li><a href="logIn.html">Login</a></li>
-                                <li><a href="contact_us.html"> Contact Us</a></li>
+                                <li><a href="@Url.Action("Index", "Contact")"> Contact Us</a></li>
                                 <li><a href="ask_question.html"> Ask Question </a></li>
                                 <li><a href="post-deatils.html"> Post-Details </a></li>
                                 <li><a href="user.html">All User</a></li>
                                 <li><a href="user_question.html"> User Question </a></li>
                                 <li><a href="category.html"> Category </a></li>
-                                <li><a href="#"> 404 </a></li>
                             </ul>
                         </li>
-                        <li><a href="contact_us.html">Contact us</a></li>
+                        <li><a href="@Url.Action("Index", "Contact")">Contact us</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -119,6 +119,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <p>Copyright 2024 Đại học Tôn Đức Thắng | <strong>Ngô Phúc Tấn</strong></p>
+                    <p>Copyright 2024 Đại học Tôn Đức Thắng | <strong>Lê Hoàng</strong></p>
+
                 </div>
                 <div class="col-md-6">
                     <div class="social-right2389"> <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a> </div>

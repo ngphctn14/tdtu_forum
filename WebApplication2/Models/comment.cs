@@ -12,18 +12,23 @@ namespace WebApplication2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class category
+    public partial class comment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public category()
+        public comment()
         {
-            this.posts = new HashSet<post>();
+            this.users = new HashSet<user>();
         }
     
-        public int category_id { get; set; }
-        public string name { get; set; }
+        public int comment_id { get; set; }
+        public string content { get; set; }
+        public Nullable<int> post_id { get; set; }
+        public Nullable<int> user_id { get; set; }
+        public Nullable<System.DateTime> commented_at { get; set; }
     
+        public virtual post post { get; set; }
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<post> posts { get; set; }
+        public virtual ICollection<user> users { get; set; }
     }
 }
