@@ -4,7 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ForumnManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ForumnManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="attachment">
+          <Key>
+            <PropertyRef Name="attachment_id" />
+          </Key>
+          <Property Name="attachment_id" Type="int" Nullable="false" />
+          <Property Name="post_id" Type="int" />
+          <Property Name="file_name" Type="varchar" MaxLength="255" />
+          <Property Name="file_path" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="category_id" />
@@ -12,24 +21,250 @@
           <Property Name="category_id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="menu">
+        <EntityType Name="comment">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="comment_id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" />
-          <Property Name="link" Type="nvarchar(max)" />
-          <Property Name="meta" Type="nvarchar" MaxLength="50" />
-          <Property Name="hide" Type="bit" />
-          <Property Name="order" Type="int" />
-          <Property Name="datebegin" Type="smalldatetime" />
+          <Property Name="comment_id" Type="int" Nullable="false" />
+          <Property Name="content" Type="text" />
+          <Property Name="post_id" Type="int" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="commented_at" Type="datetime" />
         </EntityType>
+        <EntityType Name="comment_likes">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="comment_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="content" Type="text" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="category_id" Type="int" />
+        </EntityType>
+        <EntityType Name="post_likes">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="post_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="username" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="varchar" MaxLength="30" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="last_login" Type="datetime" />
+        </EntityType>
+        <EntityType Name="user_followers">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="follower_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="follower_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__attachmen__post___35BCFE0A">
+          <End Role="post" Type="Self.post" Multiplicity="0..1" />
+          <End Role="attachment" Type="Self.attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="attachment">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comment__post_id__1BFD2C07">
+          <End Role="post" Type="Self.post" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comment__user_id__1CF15040">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comment_l__comme__2B3F6F97">
+          <End Role="comment" Type="Self.comment" Multiplicity="1" />
+          <End Role="comment_likes" Type="Self.comment_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comment">
+              <PropertyRef Name="comment_id" />
+            </Principal>
+            <Dependent Role="comment_likes">
+              <PropertyRef Name="comment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comment_l__user___2A4B4B5E">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="comment_likes" Type="Self.comment_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comment_likes">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__post__category_i__173876EA">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__post__user_id__164452B1">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__post_like__post___25869641">
+          <End Role="post" Type="Self.post" Multiplicity="1" />
+          <End Role="post_likes" Type="Self.post_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="post_likes">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__post_like__user___24927208">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="post_likes" Type="Self.post_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="post_likes">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_foll__follo__30F848ED">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="user_followers" Type="Self.user_followers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="user_followers">
+              <PropertyRef Name="follower_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_foll__user___300424B4">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="user_followers" Type="Self.user_followers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="user_followers">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ForumnManagerModelStoreContainer">
+          <EntitySet Name="attachment" EntityType="Self.attachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comment_likes" EntityType="Self.comment_likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="post_likes" EntityType="Self.post_likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_followers" EntityType="Self.user_followers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__attachmen__post___35BCFE0A" Association="Self.FK__attachmen__post___35BCFE0A">
+            <End Role="post" EntitySet="post" />
+            <End Role="attachment" EntitySet="attachment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comment__post_id__1BFD2C07" Association="Self.FK__comment__post_id__1BFD2C07">
+            <End Role="post" EntitySet="post" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comment__user_id__1CF15040" Association="Self.FK__comment__user_id__1CF15040">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comment_l__comme__2B3F6F97" Association="Self.FK__comment_l__comme__2B3F6F97">
+            <End Role="comment" EntitySet="comment" />
+            <End Role="comment_likes" EntitySet="comment_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comment_l__user___2A4B4B5E" Association="Self.FK__comment_l__user___2A4B4B5E">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment_likes" EntitySet="comment_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__post__category_i__173876EA" Association="Self.FK__post__category_i__173876EA">
+            <End Role="category" EntitySet="category" />
+            <End Role="post" EntitySet="post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__post__user_id__164452B1" Association="Self.FK__post__user_id__164452B1">
+            <End Role="user" EntitySet="user" />
+            <End Role="post" EntitySet="post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__post_like__post___25869641" Association="Self.FK__post_like__post___25869641">
+            <End Role="post" EntitySet="post" />
+            <End Role="post_likes" EntitySet="post_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__post_like__user___24927208" Association="Self.FK__post_like__user___24927208">
+            <End Role="user" EntitySet="user" />
+            <End Role="post_likes" EntitySet="post_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_foll__follo__30F848ED" Association="Self.FK__user_foll__follo__30F848ED">
+            <End Role="user" EntitySet="user" />
+            <End Role="user_followers" EntitySet="user_followers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_foll__user___300424B4" Association="Self.FK__user_foll__user___300424B4">
+            <End Role="user" EntitySet="user" />
+            <End Role="user_followers" EntitySet="user_followers" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ForumnManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -39,24 +274,177 @@
           </Key>
           <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="menu">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="meta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="hide" Type="Boolean" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="posts" Relationship="ForumnManagerModel.FK__post__category_i__173876EA" FromRole="category" ToRole="post" />
         </EntityType>
         <EntityContainer Name="ForumnManagerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="categories" EntityType="Self.category" />
-          <EntitySet Name="menus" EntityType="Self.menu" />
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="users" EntityType="ForumnManagerModel.user" />
+          <EntitySet Name="comments" EntityType="ForumnManagerModel.comment" />
+          <EntitySet Name="posts" EntityType="ForumnManagerModel.post" />
+          <AssociationSet Name="FK__post__category_i__173876EA" Association="ForumnManagerModel.FK__post__category_i__173876EA">
+            <End Role="category" EntitySet="categories" />
+            <End Role="post" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comment__post_id__1BFD2C07" Association="ForumnManagerModel.FK__comment__post_id__1BFD2C07">
+            <End Role="post" EntitySet="posts" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__comment__user_id__1CF15040" Association="ForumnManagerModel.FK__comment__user_id__1CF15040">
+            <End Role="user" EntitySet="users" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__post__user_id__164452B1" Association="ForumnManagerModel.FK__post__user_id__164452B1">
+            <End Role="user" EntitySet="users" />
+            <End Role="post" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="post_likes" Association="ForumnManagerModel.post_likes">
+            <End Role="post" EntitySet="posts" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="comment_likes" Association="ForumnManagerModel.comment_likes">
+            <End Role="comment" EntitySet="comments" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="user_followers" Association="ForumnManagerModel.user_followers">
+            <End Role="user" EntitySet="users" />
+            <End Role="user1" EntitySet="users" />
+          </AssociationSet>
+          <EntitySet Name="attachments" EntityType="ForumnManagerModel.attachment" />
+          <AssociationSet Name="FK__attachmen__post___35BCFE0A" Association="ForumnManagerModel.FK__attachmen__post___35BCFE0A">
+            <End Role="post" EntitySet="posts" />
+            <End Role="attachment" EntitySet="attachments" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="last_login" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="comments" Relationship="ForumnManagerModel.FK__comment__user_id__1CF15040" FromRole="user" ToRole="comment" />
+          <NavigationProperty Name="posts" Relationship="ForumnManagerModel.FK__post__user_id__164452B1" FromRole="user" ToRole="post" />
+          <NavigationProperty Name="liked_posts" Relationship="ForumnManagerModel.post_likes" FromRole="user" ToRole="post" />
+          <NavigationProperty Name="liked_comments" Relationship="ForumnManagerModel.comment_likes" FromRole="user" ToRole="comment" />
+          <NavigationProperty Name="followers" Relationship="ForumnManagerModel.user_followers" FromRole="user" ToRole="user1" />
+          <NavigationProperty Name="following" Relationship="ForumnManagerModel.user_followers" FromRole="user1" ToRole="user" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="comment_id" Type="Int32" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="post_id" Type="Int32" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="commented_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="post" Relationship="ForumnManagerModel.FK__comment__post_id__1BFD2C07" FromRole="comment" ToRole="post" />
+          <NavigationProperty Name="user" Relationship="ForumnManagerModel.FK__comment__user_id__1CF15040" FromRole="comment" ToRole="user" />
+          <NavigationProperty Name="likes" Relationship="ForumnManagerModel.comment_likes" FromRole="comment" ToRole="user" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="category_id" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="ForumnManagerModel.FK__post__category_i__173876EA" FromRole="post" ToRole="category" />
+          <NavigationProperty Name="comments" Relationship="ForumnManagerModel.FK__comment__post_id__1BFD2C07" FromRole="post" ToRole="comment" />
+          <NavigationProperty Name="user" Relationship="ForumnManagerModel.FK__post__user_id__164452B1" FromRole="post" ToRole="user" />
+          <NavigationProperty Name="likes" Relationship="ForumnManagerModel.post_likes" FromRole="post" ToRole="user" />
+          <NavigationProperty Name="attachments" Relationship="ForumnManagerModel.FK__attachmen__post___35BCFE0A" FromRole="post" ToRole="attachment" />
+        </EntityType>
+        <Association Name="FK__post__category_i__173876EA">
+          <End Type="ForumnManagerModel.category" Role="category" Multiplicity="0..1" />
+          <End Type="ForumnManagerModel.post" Role="post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comment__post_id__1BFD2C07">
+          <End Type="ForumnManagerModel.post" Role="post" Multiplicity="0..1" />
+          <End Type="ForumnManagerModel.comment" Role="comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__comment__user_id__1CF15040">
+          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="ForumnManagerModel.comment" Role="comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__post__user_id__164452B1">
+          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="ForumnManagerModel.post" Role="post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="post_likes">
+          <End Type="ForumnManagerModel.post" Role="post" Multiplicity="*" />
+          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="*" />
+        </Association>
+        <Association Name="comment_likes">
+          <End Type="ForumnManagerModel.comment" Role="comment" Multiplicity="*" />
+          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="*" />
+        </Association>
+        <Association Name="user_followers">
+          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="*" />
+          <End Type="ForumnManagerModel.user" Role="user1" Multiplicity="*" />
+        </Association>
+        <EntityType Name="attachment">
+          <Key>
+            <PropertyRef Name="attachment_id" />
+          </Key>
+          <Property Name="attachment_id" Type="Int32" Nullable="false" />
+          <Property Name="post_id" Type="Int32" />
+          <Property Name="file_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="file_path" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="post" Relationship="ForumnManagerModel.FK__attachmen__post___35BCFE0A" FromRole="attachment" ToRole="post" />
+        </EntityType>
+        <Association Name="FK__attachmen__post___35BCFE0A">
+          <End Type="ForumnManagerModel.post" Role="post" Multiplicity="0..1" />
+          <End Type="ForumnManagerModel.attachment" Role="attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="attachment">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -70,16 +458,73 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="menus">
-            <EntityTypeMapping TypeName="ForumnManagerModel.menu">
-              <MappingFragment StoreEntitySet="menu">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="ForumnManagerModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="last_login" ColumnName="last_login" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="ForumnManagerModel.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="commented_at" ColumnName="commented_at" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posts">
+            <EntityTypeMapping TypeName="ForumnManagerModel.post">
+              <MappingFragment StoreEntitySet="post">
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="post_likes" TypeName="ForumnManagerModel.post_likes" StoreEntitySet="post_likes">
+            <EndProperty Name="user">
+              <ScalarProperty Name="user_id" ColumnName="user_id" />
+            </EndProperty>
+            <EndProperty Name="post">
+              <ScalarProperty Name="post_id" ColumnName="post_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="comment_likes" TypeName="ForumnManagerModel.comment_likes" StoreEntitySet="comment_likes">
+            <EndProperty Name="user">
+              <ScalarProperty Name="user_id" ColumnName="user_id" />
+            </EndProperty>
+            <EndProperty Name="comment">
+              <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="user_followers" TypeName="ForumnManagerModel.user_followers" StoreEntitySet="user_followers">
+            <EndProperty Name="user1">
+              <ScalarProperty Name="user_id" ColumnName="user_id" />
+            </EndProperty>
+            <EndProperty Name="user">
+              <ScalarProperty Name="user_id" ColumnName="follower_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="attachments">
+            <EntityTypeMapping TypeName="ForumnManagerModel.attachment">
+              <MappingFragment StoreEntitySet="attachment">
+                <ScalarProperty Name="file_path" ColumnName="file_path" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="attachment_id" ColumnName="attachment_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

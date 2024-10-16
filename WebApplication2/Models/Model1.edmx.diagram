@@ -5,9 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="021b4966a3434371b14cca12f4873e2a" Name="Diagram1">
-        <EntityTypeShape EntityType="ForumnManagerModel.category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumnManagerModel.menu" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-      </Diagram>
+        <EntityTypeShape EntityType="ForumnManagerModel.category" Width="1.5" PointX="3.625" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumnManagerModel.user" Width="1.5" PointX="8.5" PointY="0.5" />
+        <EntityTypeShape EntityType="ForumnManagerModel.comment" Width="1.5" PointX="10.625" PointY="0.625" />
+        <EntityTypeShape EntityType="ForumnManagerModel.post" Width="1.5" PointX="5.875" PointY="2.125" />
+        <AssociationConnector Association="ForumnManagerModel.FK__post__category_i__173876EA" />
+        <AssociationConnector Association="ForumnManagerModel.FK__comment__post_id__1BFD2C07" />
+        <AssociationConnector Association="ForumnManagerModel.FK__comment__user_id__1CF15040" />
+        <AssociationConnector Association="ForumnManagerModel.FK__post__user_id__164452B1" />
+        <AssociationConnector Association="ForumnManagerModel.post_likes" />
+        <AssociationConnector Association="ForumnManagerModel.comment_likes" />
+        <AssociationConnector Association="ForumnManagerModel.user_followers" />
+        <EntityTypeShape EntityType="ForumnManagerModel.attachment" Width="1.5" PointX="9.875" PointY="4.875" />
+        <AssociationConnector Association="ForumnManagerModel.FK__attachmen__post___35BCFE0A" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

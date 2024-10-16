@@ -13,7 +13,6 @@ namespace WebApplication2.Controllers
         // GET: Post
         public ActionResult Index()
         {
-
             return View();
         }
     }

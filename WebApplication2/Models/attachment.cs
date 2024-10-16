@@ -12,14 +12,13 @@ namespace WebApplication2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class menu
+    public partial class attachment
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string link { get; set; }
-        public string meta { get; set; }
-        public Nullable<bool> hide { get; set; }
-        public Nullable<int> order { get; set; }
-        public Nullable<System.DateTime> datebegin { get; set; }
+        public int attachment_id { get; set; }
+        public Nullable<int> post_id { get; set; }
+        public string file_name { get; set; }
+        public string file_path { get; set; }
+    
+        public virtual post post { get; set; }
     }
 }

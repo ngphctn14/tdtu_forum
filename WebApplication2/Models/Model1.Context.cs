@@ -26,6 +26,9 @@ namespace WebApplication2.Models
         }
     
         public virtual DbSet<category> categories { get; set; }
-        public virtual DbSet<menu> menus { get; set; }
+        public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<comment> comments { get; set; }
+        public virtual DbSet<post> posts { get; set; }
+        public virtual DbSet<attachment> attachments { get; set; }
     }
 }
