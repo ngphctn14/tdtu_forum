@@ -30,7 +30,7 @@
                         <ul>
                             <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
                             <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
-                            <li><a href="logIn.html"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
+                            <li><a href="@Url.Action("Index", "Login")"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,21 +59,21 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/Content/image/logo1.png" alt="Logo" style="width: 100px; height: 100px"></a>
-                    <a href="@Url.Action("Index", "Home")" style="font-weight: 700;color: #DE0405;font-family: 'Nunito',sans-serif;font-size: 18.5px; display:inline-block; margin-top:10px" >ĐẠI HỌC TÔN ĐỨC THẮNG</a>
+                    <a href="@Url.Action("Index", "Home")" style="font-weight: 700;color: #DE0405;font-family: 'Nunito',sans-serif;font-size: 18.5px; display:inline-block; margin-top:10px" >TON DUC THANG UNIVERSITY</a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav"> </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                        <li><a href="@Url.Action("Index", "Post")">Ask Question</a></li>
+                        <li><a href="@Url.Action("Index", "Post")">New Post</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Question <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
                             <ul class="dropdown-menu animated zoomIn">
                           @{Html.RenderAction("getDetails", "Category");}
                             </ul>
                         </li>
-                        <li class="dropdown">
+                        @*<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Page <span class="caret"></span></a>
                             <ul class="dropdown-menu animated zoomIn">
                                 <li><a href="logIn.html">Login</a></li>
@@ -82,10 +82,8 @@
                                 <li><a href="post-deatils.html"> Post-Details </a></li>
                                 <li><a href="user.html">All User</a></li>
                                 <li><a href="user_question.html"> User Question </a></li>
-                                <li><a href="category.html"> Category </a></li>
-                                <li><a href="#"> 404 </a></li>
                             </ul>
-                        </li>
+                        </li>*@
                         <li><a href="contact_us.html">Contact us</a></li>
                     </ul>
                 </div>
@@ -99,20 +97,6 @@
 
     <!--    footer -->
     <div class="footer-search">
-        <div class="container">
-            <div class="row">
-                <div id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        <input type="text" class="  search-query form-control user-control30" placeholder="Search here...." /> <span class="input-group-btn">
-                            <button class="btn btn-danger" type="button">
-                                <span class=" glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <section class="footer-social">
         <div class="container">

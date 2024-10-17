@@ -31,11 +31,11 @@ namespace WebApplication2.Controllers
         }
 
         //Co gi vo sql them bang welcome_home 
-        public ActionResult getHomeWelcome()
-        {
-            var v = from t in _db.welcome_home
-                    select t;
-            return PartialView(v.ToList());
-        }
+        //public ActionResult getHomeWelcome()
+        //{
+            //var v = from t in _db.welcome_home
+            //        select t;
+            //return PartialView(v.ToList());
+        //}
     }
 }
