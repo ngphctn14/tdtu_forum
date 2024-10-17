@@ -19,8 +19,7 @@ namespace WebApplication2.Models
         {
             this.attachments = new HashSet<attachment>();
             this.comments = new HashSet<comment>();
-            this.likes = new HashSet<user>();
-            this.attachments = new HashSet<attachment>();
+            this.users = new HashSet<user>();
         }
     
         public int post_id { get; set; }
@@ -37,5 +36,6 @@ namespace WebApplication2.Models
         public virtual ICollection<comment> comments { get; set; }
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<user> users { get; set; }
     }
 }

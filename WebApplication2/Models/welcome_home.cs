@@ -12,21 +12,10 @@ namespace WebApplication2.Models
     using System;
     using System.Collections.Generic;
     
-<<<<<<<< HEAD:WebApplication2/Models/attachment.cs
-    public partial class attachment
-    {
-        public int attachment_id { get; set; }
-        public Nullable<int> post_id { get; set; }
-        public string file_name { get; set; }
-        public string file_path { get; set; }
-    
-        public virtual post post { get; set; }
-========
     public partial class welcome_home
     {
         public int welcome_id { get; set; }
         public string welcome_title { get; set; }
         public string link { get; set; }
->>>>>>>> 5c3c779ee0667f2b5b52cac6a521cf1c3cc73def:WebApplication2/Models/welcome_home.cs
     }
 }

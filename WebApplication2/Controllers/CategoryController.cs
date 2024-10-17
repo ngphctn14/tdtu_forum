@@ -11,7 +11,7 @@ namespace WebApplication2.Controllers
     public class CategoryController : Controller
     {
 
-        ForumnManagerEntities2 _db = new ForumnManagerEntities2();
+        ForumnManagerEntities6 _db = new ForumnManagerEntities6();
 
         // GET: Category
         public ActionResult Index()

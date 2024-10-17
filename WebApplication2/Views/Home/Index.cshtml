@@ -7,8 +7,6 @@
 <!--======= welcome section on top background=====-->
 @{ Html.RenderAction("getHomeWelcome", "Home");}
 
-
-
 <!-- ======content section/body=====-->
 <section class="main-content920">
     <div class="container">
@@ -28,13 +26,13 @@
 
                     <section id="content1">
                         <!--Recent Question Content Section -->
-                        @{ Html.RenderAction("getRecentPost", "Home");}
+                        @{ Html.RenderAction("getRecentPost", "Post");}
                     </section>
                     <!--  End of content-1------>
 
                     <section id="content2">
                         <!--Most Response Content Section -->
-                        @{ Html.RenderAction("getMostResponsesPost", "Home");}
+                        @{ Html.RenderAction("getMostResponsesPost", "Post");}
 
                     </section>
 
@@ -42,7 +40,7 @@
 
                     <section id="content3">
                         <!--Recently answered Content Section -->
-                        @{ Html.RenderAction("getRecentlyAnswers", "Home");}
+                        @{ Html.RenderAction("getRecentlyAnswers", "Post");}
 
                     </section>
                     <!--End content-3 -->
@@ -50,7 +48,7 @@
 
                     <section id="content4">
                         <!--No answered Content Section -->
-                        @{ Html.RenderAction("getNoAnswerPosts", "Home");}
+                        @{ Html.RenderAction("getNoAnswerPosts", "Post");}
 
                     </section>
 
@@ -379,17 +377,17 @@
                     </a>
                     <div class="rememberme">
                         <label>
-                            <input type="checkbox" checked="checked"> Remember Me
+                            <input type="checkbox" checked="checked"> Remember me
                         </label> <a href="#" class="resbutton3892">Register</a>
                     </div>
                 </div>
                 <!--          End tags part-->
                 <!--        start recent post  -->
 
-                <div class="recent-post3290">
-                    <h4>News</h4>
-                    @{ Html.RenderAction("getNews", "Home");}
-                </div>
+                <!--<div class="recent-post3290">
+                    <h4>News</h4>-->
+                    @*@{ Html.RenderAction("getNews", "Home");}*@
+                <!--</div>-->
                 <!--       end recent post    -->
             </aside>
         </div>

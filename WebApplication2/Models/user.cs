@@ -19,10 +19,10 @@ namespace WebApplication2.Models
         {
             this.comments = new HashSet<comment>();
             this.posts = new HashSet<post>();
-            this.liked_posts = new HashSet<post>();
-            this.liked_comments = new HashSet<comment>();
-            this.followers = new HashSet<user>();
-            this.following = new HashSet<user>();
+            this.comments1 = new HashSet<comment>();
+            this.posts1 = new HashSet<post>();
+            this.user1 = new HashSet<user>();
+            this.users = new HashSet<user>();
         }
     
         public int user_id { get; set; }
@@ -38,8 +38,12 @@ namespace WebApplication2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<post> posts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<comment> comments1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<post> posts1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<user> user1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<user> users { get; set; }
     }
 }

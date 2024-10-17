@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<WebApplication2.Models.post>
 
-
 @foreach (var i in Model)
 {
     <div class="question-type2033">
@@ -8,7 +7,7 @@
             <div class="col-md-1">
                 <div class="left-user12923 left-user12923-repeat">
                     <a href="#"><img src="~/Content/image/images.png" alt="image"> </a>
-                    <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a>
+                    <a href="#" class="">@i.user.full_name</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -22,16 +21,20 @@
                     </div>
                     <div class="ques-details10018">
                         <p>
-                            @i.content.Substring(0, 200)...
+                            @if (i.content.Length >= 200)
+                            {
+                                @($"{i.content.Substring(0, 200)}...")
+                            }
+                            else
+                            {
+                                @i.content
+                            }
                         </p>
                     </div>
                     <hr>
                     <div class="ques-icon-info3293">
-                        <a href="#"><i class="fa fa-star" aria-hidden="true"> 5 </i></a>
-                        <a href="#"><i class="fa fa-folder" aria-hidden="true"> wordpress </i></a>
                         <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> @i.created_at</i></a>
-                        <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i></a>
-                        <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a>
+                        <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> @i.category.name</i></a>
                     </div>
                 </div>
             </div>
@@ -41,10 +44,12 @@
                         <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> @i.comments.Count answer</i></button>
                     </a>
                     <a href="#">
-                        <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true">@i.users.Count Likes</i> </button>
+                        <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true"> @i.users.Count Likes</i> </button>
                     </a>
                 </div>
             </div>
-        </div>A
+        </div>
     </div>
 }
+
+
