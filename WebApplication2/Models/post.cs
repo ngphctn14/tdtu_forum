@@ -17,6 +17,7 @@ namespace WebApplication2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public post()
         {
+            this.attachments = new HashSet<attachment>();
             this.comments = new HashSet<comment>();
             this.likes = new HashSet<user>();
             this.attachments = new HashSet<attachment>();
@@ -29,13 +30,12 @@ namespace WebApplication2.Models
         public Nullable<int> user_id { get; set; }
         public Nullable<int> category_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<attachment> attachments { get; set; }
         public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<comment> comments { get; set; }
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> likes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<attachment> attachments { get; set; }
     }
 }

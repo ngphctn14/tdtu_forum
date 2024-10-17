@@ -268,6 +268,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ForumnManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="attachment">
+          <Key>
+            <PropertyRef Name="attachment_id" />
+          </Key>
+          <Property Name="attachment_id" Type="Int32" Nullable="false" />
+          <Property Name="post_id" Type="Int32" />
+          <Property Name="file_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="file_path" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="post" Relationship="Self.FK__attachmen__post___35BCFE0A" FromRole="attachment" ToRole="post" />
+        </EntityType>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="category_id" />
@@ -449,7 +459,17 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ForumnManagerModelStoreContainer" CdmEntityContainer="ForumnManagerEntities">
+        <EntityContainerMapping StorageEntityContainer="ForumnManagerModelStoreContainer" CdmEntityContainer="ForumnManagerEntities2">
+          <EntitySetMapping Name="attachments">
+            <EntityTypeMapping TypeName="ForumnManagerModel.attachment">
+              <MappingFragment StoreEntitySet="attachment">
+                <ScalarProperty Name="attachment_id" ColumnName="attachment_id" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="file_path" ColumnName="file_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="categories">
             <EntityTypeMapping TypeName="ForumnManagerModel.category">
               <MappingFragment StoreEntitySet="category">

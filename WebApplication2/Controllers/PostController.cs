@@ -9,7 +9,7 @@ namespace WebApplication2.Controllers
 {
     public class PostController : Controller
     {
-        ForumnManagerEntities _db = new ForumnManagerEntities();
+        ForumnManagerEntities2 _db = new ForumnManagerEntities2();
         // GET: Post
         public ActionResult Index()
         {
