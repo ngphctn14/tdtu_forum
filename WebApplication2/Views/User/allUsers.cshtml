@@ -1,54 +1,37 @@
-﻿@model WebApplication2.Models.user
+﻿@model IEnumerable<WebApplication2.Models.user>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Users";
 }
 
 <body>
     <section class="header-descriptin329">
         <div class="container">
-            <h3>User Details</h3>
+            <h3>All User Question</h3>
             <ol class="breadcrumb breadcrumb839">
                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-                <li class="active">User Details</li>
+                <li class="active">All User Question</li>
             </ol>
         </div>
     </section>
     <section class="main-content920">
         <div class="container">
             <div class="row">
-                <!--    body content-->
-                <div class="col-md-9">
-                    <div class="about-user2039 mt-70">
-                        <div class="user-title3930">
-                            <h3>About <a href="#">@Model.full_name</a>
-                     
-                        <span class="badge229">
-                        <a href="#">punit</a></span>
-                        </h3>
-                            <hr> </div>
-                        <div class="user-image293"> <img src="image/images.png" alt="Image"> </div>
-                        <div class="user-list10039">
-                            <div class="ul-list-user-left29">
-                                <ul>
-                                    <li><i class="fa fa-plus" aria-hidden="true"></i> <strong>Registered:</strong> June 4, 2014</li>
-                                    <li><i class="fa fa-map-marker" aria-hidden="true"></i> <strong>Country:</strong> Egypt</li>
-                                    <li><i class="fa fa-heart" aria-hidden="true"></i> <strong>Age:</strong> 27</li>
-                                    <li><i class="fa fa-globe" aria-hidden="true"></i> <strong>Website:</strong><a href="#">view</a></li>
-                                </ul>
+                <div class="col-md-9 user-profile328903">
+                    @foreach (var i in Model)
+                    {
+                        <div class="about-user2039">
+                           <div class="row">
+                           <div class="col-md-1">
+                            <div class="user-image2939303"> <img src="~/Content/Image/images.png" alt="Image"> </div>
+                               </div>
+                               <div class="col-md-11">
+                            <div class="user-description3903"> <a href="@Url.Action("Index", "User", new {id = i.user_id})">@i.full_name</a> <span class="badge229">
                             </div>
-                            <div class="ul-list-user-right29">
-                                <ul>
-                                    <li><i class="fa fa-phone" aria-hidden="true"></i> <strong>Phone:</strong> 01111111110</li>
-                                    <li><i class="fa fa-globe" aria-hidden="true"></i> <strong>City:</strong> Cairo</li>
-                                    <li><i class="fa fa-user" aria-hidden="true"></i> <strong>Sex: </strong>Male</li>
-                                </ul>
+                               </div>
                             </div>
                         </div>
-                    </div>
-
-                    @{ Html.RenderAction("getPostsOfAUser", "Post", new { user_id = Model.user_id });}
-                    
+                    }
                 </div>
                 <!--                end of col-md-9 -->
                 <!--           strart col-md-3 (side bar)-->
@@ -74,6 +57,7 @@
                             <label>
                                 <input type="checkbox" checked="checked"> Remember Me</label> <a href="#" class="resbutton3892">Register</a> </div>
                     </div>
+                    <!--              highest part-->
                     <!--               end of Highest points -->
                     <!--          start tags part-->
                     <!--          End tags part-->

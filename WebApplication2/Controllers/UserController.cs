@@ -18,5 +18,12 @@ namespace WebApplication2.Controllers
             var user = _db.users.Find(id);
             return View(user);
         }
+
+        public ActionResult allUsers()
+        {
+            var v = from user in _db.users
+                    select user;
+            return View(v.ToList());
+        }
     }
 }
