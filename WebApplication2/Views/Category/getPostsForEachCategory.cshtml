@@ -1,0 +1,9 @@
+﻿@model IEnumerable<WebApplication2.Models.category>
+<div class="category-section">
+    @foreach (var i in Model)
+        {
+            <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><h2>@i.name</h2></a>
+            Html.RenderAction("getPostByCategoryTop5", "Post", new {category_id = i.category_id});
+        }
+</div>
+

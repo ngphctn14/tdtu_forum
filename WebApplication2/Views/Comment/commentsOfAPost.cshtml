@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WebApplication2.Models.comment>
+
+@foreach(var i in Model)
+{
+    <div class="comment-list12993">
+        <div class="container">
+            <div class="row">
+                <div class="comments-container">
+                    <ul id="comments-list" class="comments-list">
+                        <li>
+                             <div class="comment-main-level">
+                                <!-- Avatar -->
+                                <div class="comment-avatar"><img src="image/images.png" alt=""></div>
+                                <!-- Contenedor del Comentario -->
+                                <div class="comment-box">
+                                    <div class="comment-head">
+                                        <h6 class="comment-name"><a href="#">@i.user.full_name</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> @i.commented_at</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
+                                    <div class="comment-content"> @i.content </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+}

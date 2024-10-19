@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WebApplication2.Models.category>
 @foreach (var i in Model)
 {
-    <li><a href="#">@i.name</a></li>
+    <li><a href="@Url.Action("Index", "Category", new {id = i.category_id})">@i.name</a></li>
 }

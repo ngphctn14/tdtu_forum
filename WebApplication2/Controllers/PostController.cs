@@ -25,6 +25,12 @@ namespace WebApplication2.Controllers
             return PartialView(v.ToList());
         }
 
+        public ActionResult PostDetails(int id)
+        {
+            var post = _db.posts.Find(id);
+            return View(post);
+        }
+
         public ActionResult getPostByCategory(int category_id)
         {
             var v = from post in _db.posts
@@ -34,28 +40,32 @@ namespace WebApplication2.Controllers
             return PartialView(v.ToList());
         }
 
-        public ActionResult getMostResponsesPost()
+        public ActionResult getMostResponsesPost(int category_id)
         {
            
-            var postsWithMostResponses = _db.posts
+            var postsWithMostResponses = (from t in _db.posts
+                                          where t.category_id == category_id
+                                          select t)
                 .OrderByDescending(p => p.comments.Count)
-                .Take(5)
                 .ToList();
 
             return PartialView(postsWithMostResponses);
         }
-        public ActionResult getRecentPost()
+        public ActionResult getRecentPost(int category_id)
         {
-            var recentPosts = _db.posts
+            var recentPosts = (from t in _db.posts
+                                  where t.category_id == category_id
+                                  select t)
                 .OrderByDescending(p => p.created_at)
-                .Take(5)
                 .ToList();
 
             return PartialView(recentPosts); 
         }
-        public ActionResult getRecentlyAnswers()
+        public ActionResult getRecentlyAnswers(int category_id)
         {
-            var postsWithRecentComments = _db.posts
+            var postsWithRecentComments = (from t in _db.posts
+                                  where t.category_id == category_id
+                                  select t)
                 .Where(p => p.comments.Any())
                 .Select(p => new
                 {
@@ -66,20 +76,30 @@ namespace WebApplication2.Controllers
                         .FirstOrDefault() 
                 })
                 .OrderByDescending(pc => pc.MostRecentCommentDate)
-                .Take(5)
                 .ToList();
             var posts = postsWithRecentComments.Select(pc => pc.Post).ToList();
 
             return PartialView(posts);
         }
-        public ActionResult getNoAnswerPosts()
+        public ActionResult getNoAnswerPosts(int category_id)
         {
-            var noAnswerPosts = _db.posts
+            var noAnswerPosts = (from t in _db.posts
+                                  where t.category_id == category_id
+                                  select t)
                 .Where(p => !p.comments.Any())
                 .OrderByDescending(p => p.created_at)
                 .ToList();
 
             return PartialView(noAnswerPosts);
+        }
+
+        public ActionResult getPostsOfAUser(int user_id)
+        {
+            var v = from posts in _db.posts
+                    where posts.user_id == user_id
+                    orderby posts.created_at descending
+                    select posts;
+            return PartialView(v.ToList());
         }
     }
 }

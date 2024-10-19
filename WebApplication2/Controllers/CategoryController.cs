@@ -14,20 +14,23 @@ namespace WebApplication2.Controllers
         ForumnManagerEntities6 _db = new ForumnManagerEntities6();
 
         // GET: Category
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View();
+            var postsInCategory = _db.posts.Where(p => p.category_id == id).ToList();
+
+            var category = _db.categories.Find(id);
+
+            ViewBag.CategoryName = category?.name;
+            ViewBag.Id = category?.category_id;
+
+            return View(postsInCategory);
         }
 
-        public ActionResult CategoryIndex(int category_id)
+        public ActionResult getPostsForEachCategory()
         {
-            var category = _db.categories.FirstOrDefault(c => c.category_id == category_id);
-
-            if (category == null) {
-                return HttpNotFound();
-            }
-
-            return View(category);
+            var v = from t in _db.categories
+                    select t;
+            return PartialView(v.ToList());
         }
 
         public ActionResult getDetails()

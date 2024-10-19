@@ -132,12 +132,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\SignupController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,11 +254,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Signup\Index.cshtml" />
     <Content Include="Views\Home\getHomeWelcome.cshtml" />
-    <Content Include="Views\Category\getDetails.cshtml" />
-    <Content Include="Views\Category\getDetailsSelect.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Signup\Index.cshtml" />
     <Content Include="Views\Post\getPostByCategoryTop5.cshtml" />
     <Content Include="Views\Post\getPostByCategory.cshtml" />
     <Content Include="Views\Home\getNews.cshtml" />
@@ -271,6 +269,12 @@
     <Content Include="Views\Post\getRecentPost.cshtml" />
     <Content Include="Views\Post\getRecentlyAnswers.cshtml" />
     <Content Include="Views\Post\getNoAnswerPosts.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\getPostsForEachCategory.cshtml" />
+    <Content Include="Views\Post\PostDetails.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Comment\commentsOfAPost.cshtml" />
+    <Content Include="Views\Post\getPostsOfAUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

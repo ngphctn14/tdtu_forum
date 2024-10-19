@@ -1,0 +1,88 @@
+﻿@model WebApplication2.Models.post
+
+@{
+    ViewBag.Title = Model.title;
+}
+
+<body>
+    <section class="header-descriptin329">
+        <div class="container">
+            <h3>Post Details</h3>
+            <ol class="breadcrumb breadcrumb839">
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="#">Post Details</a></li>
+                <li class="">This Is My first Question</li>
+            </ol>
+        </div>
+    </section>
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="post-details">
+                        <div class="details-header923">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="post-title-left129">
+                                        <h3>@Model.title</h3> </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="post-que-rep-rihght320"> <a href=@Url.Action("Index", "Category", new {id = Model.category_id})><i class="fa fa-question-circle" aria-hidden="true"></i> @Model.category.name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-details-info1982">
+                            <p>@Model.content</p>
+                            <hr>
+                            <div class="post-footer29032">
+                                <div class="left-user12923 left-user12923-repeat">
+                                    <a href="#"><img src="/Content/image/images.png" alt="image"> </a>
+                                    <a href="@Url.Action("Index", "User", new {id = Model.user_id})" class="">@Model.user.full_name</a>
+                                </div>
+                                <div class="l-side2023"> <i class="fa fa-clock-o clock2" aria-hidden="true"> @Model.created_at</i> <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true"> @Model.comments.Count</i></a> </div>
+                                <div class="l-rightside39">
+                                    <button type="button" class="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like"><i class="fa fa-thumbs-o-up " aria-hidden="true"></i></button>
+                                    <span class="single-question-vote-result">@Model.users.Count</span> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- lol-->
+                            @{Html.RenderAction("commentsOfAPost", "Comment", new {post_id = Model.post_id});}
+                    <!-- lol-->
+                </div>
+                <!--                end of col-md-9 -->
+                <!--           strart col-md-3 (side bar)-->
+                <aside class="col-md-3 sidebar97239">
+                    <div class="categori-part329">
+                        <h4>Categories</h4>
+                        <ul>
+                            @{Html.RenderAction("getDetails", "Category");}
+                        </ul>
+                    </div>
+                    <!--             social part -->
+                    <!--              login part-->
+                    <div class="login-part2389">
+                        <h4>Login</h4>
+                        <div class="input-group300"> <span><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <input type="text" class="namein309" placeholder="Username"> </div>
+                        <div class="input-group300"> <span><i class="fa fa-lock" aria-hidden="true"></i></span>
+                            <input type="password" class="passin309" placeholder="Name"> </div>
+                        <a href="#">
+                            <button type="button" class="userlogin320">Log In</button>
+                        </a>
+                        <div class="rememberme">
+                            <label>
+                                <input type="checkbox" checked="checked"> Remember Me</label> <a href="#" class="resbutton3892">Register</a> </div>
+                    </div>
+                    <!--               end of Highest points -->
+                    <!--          start tags part-->
+                    <!--          End tags part-->
+                    <!--        start recent post  -->
+                    <div class="recent-post3290">
+                    </div>
+                    <!--       end recent post    -->
+                </aside>
+            </div>
+        </div>
+    </section>
+</body>

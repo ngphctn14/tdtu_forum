@@ -8,7 +8,7 @@
             <div class="col-md-1">
                 <div class="left-user12923 left-user12923-repeat">
                     <a href="#"><img src="~/Content/image/images.png" alt="image"> </a>
-                    <a href="#" class="">@i.user.full_name</a>
+                    <a href="@Url.Action("Index", "User", new {id = i.user_id})" class="">@i.user.full_name</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -34,8 +34,8 @@
                     </div>
                     <hr>
                     <div class="ques-icon-info3293">
-                        <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> @i.created_at</i></a>
-                        <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> @i.category.name</i></a>
+                        <i class="fa fa-clock-o" aria-hidden="true"> @i.created_at</i>
+                        <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><i class="fa fa-question-circle-o" aria-hidden="true"> @i.category.name</i></a>
                     </div>
                 </div>
             </div>
