@@ -101,5 +101,13 @@ namespace WebApplication2.Controllers
                     select posts;
             return PartialView(v.ToList());
         }
+
+        public ActionResult get15RecentPosts()
+        {
+            var v = (from posts in _db.posts
+                    orderby posts.created_at descending
+                    select posts).Take(15);
+            return PartialView(v.ToList());
+        }
     }
 }

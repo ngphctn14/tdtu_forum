@@ -1,0 +1,21 @@
+﻿@model IEnumerable<WebApplication2.Models.post>
+
+<div class="recent-post3290">
+<h4>Recent posts</h4>
+@foreach (var i in Model)
+{
+    <div class="post-details021"> <a href="@Url.Action("PostDetails", "Post", new {id = i.post_id})"><h5>@i.title</h5></a>
+    @if (i.content.Length >= 200)
+    {
+        <p>
+            @($"{i.content.Substring(0, 50)}...")
+        </p>
+    } else
+    {
+        <p>@i.content</p>
+    }
+    <small style="color: #848991">@i.created_at</small>
+    <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><small style="color: #848991">@i.category.name</small></a>
+    </div>
+}
+</div>

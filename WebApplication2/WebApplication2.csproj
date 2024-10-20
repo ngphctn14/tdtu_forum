@@ -276,6 +276,7 @@
     <Content Include="Views\Comment\commentsOfAPost.cshtml" />
     <Content Include="Views\Post\getPostsOfAUser.cshtml" />
     <Content Include="Views\User\allUsers.cshtml" />
+    <Content Include="Views\Post\get15RecentPosts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
