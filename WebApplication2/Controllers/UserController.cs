@@ -25,5 +25,7 @@ namespace WebApplication2.Controllers
                     select user;
             return View(v.ToList());
         }
+
+        
     }
 }

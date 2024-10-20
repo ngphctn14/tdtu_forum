@@ -36,7 +36,7 @@
                             <hr>
                             <div class="post-footer29032">
                                 <div class="left-user12923 left-user12923-repeat">
-                                    <a href="#"><img src="/Content/image/images.png" alt="image"> </a>
+                                    <a href="#"><img src="~/Content/image/images.png" alt="image"> </a>
                                     <a href="@Url.Action("Index", "User", new {id = Model.user_id})" class="">@Model.user.full_name</a>
                                 </div>
                                 <div class="l-side2023"> <i class="fa fa-clock-o clock2" aria-hidden="true"> @Model.created_at</i> <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true"> @Model.comments.Count</i></a> </div>
@@ -78,8 +78,7 @@
                     <!--          start tags part-->
                     <!--          End tags part-->
                     <!--        start recent post  -->
-                    <div class="recent-post3290">
-                    </div>
+                    @{ Html.RenderAction("get15RecentPosts", "Post");}
                     <!--       end recent post    -->
                 </aside>
             </div>

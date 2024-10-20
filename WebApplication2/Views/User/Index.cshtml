@@ -23,29 +23,29 @@
                         <div class="user-title3930">
                             <h3>About <a href="#">@Model.full_name</a>
                      
-                        <span class="badge229">
-                        <a href="#">punit</a></span>
+                        @*<span class="badge229">
+                        <a href="#">punit</a></span>*@
                         </h3>
                             <hr> </div>
-                        <div class="user-image293"> <img src="image/images.png" alt="Image"> </div>
+                        <div class="user-image293"> <img src="~/Content/image/images.png" alt="Image"> </div>
                         <div class="user-list10039">
                             <div class="ul-list-user-left29">
                                 <ul>
-                                    <li><i class="fa fa-plus" aria-hidden="true"></i> <strong>Registered:</strong> June 4, 2014</li>
-                                    <li><i class="fa fa-map-marker" aria-hidden="true"></i> <strong>Country:</strong> Egypt</li>
-                                    <li><i class="fa fa-heart" aria-hidden="true"></i> <strong>Age:</strong> 27</li>
-                                    <li><i class="fa fa-globe" aria-hidden="true"></i> <strong>Website:</strong><a href="#">view</a></li>
+                                    <li><i class="fa fa-plus" aria-hidden="true"></i> <strong>Registered:</strong>@Model.created_at</li>
+                                    <li><i class="fa fa-star" aria-hidden="true"></i> <strong>Email:</strong> @Model.email</li>
+                                    @*<li><i class="fa fa-heart" aria-hidden="true"></i> <strong>Last login:</strong> @Model.last_login</li>*@
+
                                 </ul>
                             </div>
                             <div class="ul-list-user-right29">
                                 <ul>
-                                    <li><i class="fa fa-phone" aria-hidden="true"></i> <strong>Phone:</strong> 01111111110</li>
-                                    <li><i class="fa fa-globe" aria-hidden="true"></i> <strong>City:</strong> Cairo</li>
-                                    <li><i class="fa fa-user" aria-hidden="true"></i> <strong>Sex: </strong>Male</li>
+                                    <li><i class="fa fa-heart" aria-hidden="true"></i> <strong>Last login:</strong> @Model.last_login</li>
+                                  
                                 </ul>
                             </div>
                         </div>
                     </div>
+                            
 
                     @{ Html.RenderAction("getPostsOfAUser", "Post", new { user_id = Model.user_id });}
                     

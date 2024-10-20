@@ -31,5 +31,6 @@ namespace WebApplication2.Models
         public virtual DbSet<post> posts { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<welcome_home> welcome_home { get; set; }
+        public virtual DbSet<NEWS> NEWS { get; set; }
     }
 }
