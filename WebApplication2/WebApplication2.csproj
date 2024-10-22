@@ -131,6 +131,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\admin\adminAreaRegistration.cs" />
+    <Compile Include="Areas\admin\Controllers\usersController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -280,6 +282,14 @@
     <Content Include="Views\Post\getPostsOfAUser.cshtml" />
     <Content Include="Views\User\allUsers.cshtml" />
     <Content Include="Views\Post\get15RecentPosts.cshtml" />
+    <Content Include="Areas\admin\Views\web.config" />
+    <Content Include="Areas\admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\admin\Views\users\Create.cshtml" />
+    <Content Include="Areas\admin\Views\users\Delete.cshtml" />
+    <Content Include="Areas\admin\Views\users\Details.cshtml" />
+    <Content Include="Areas\admin\Views\users\Edit.cshtml" />
+    <Content Include="Areas\admin\Views\users\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -309,6 +319,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\admin\Data\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
