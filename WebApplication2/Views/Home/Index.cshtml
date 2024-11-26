@@ -5,7 +5,12 @@
 }
 
 <!--======= welcome section on top background=====-->
-@{ Html.RenderAction("getHomeWelcome", "Home");}
+<section class="welcome-part-one">
+    <div class="container">
+        @{ Html.RenderAction("getHomeWelcome", "Home");}
+    </div>
+</section>
+
 
 <!-- ======content section/body=====-->
 <section class="main-content920">
@@ -46,10 +51,9 @@
                 @{Html.RenderAction("get15RecentPosts", "Post");}
                 <!--          End tags part-->
                 <!--        start recent post  -->
-
                 <!--<div class="recent-post3290">
                     <h4>News</h4>-->
-                    @*@{ Html.RenderAction("getNews", "Home");}*@
+                @*@{ Html.RenderAction("getNews", "Home");}*@
                 <!--</div>-->
                 <!--       end recent post    -->
             </aside>

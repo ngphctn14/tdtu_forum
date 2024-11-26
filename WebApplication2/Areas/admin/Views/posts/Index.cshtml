@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<WebApplication2.Models.post>
+@model WebApplication2.Models.category
 
 
 @{
@@ -12,13 +12,7 @@
         text-align: left;
     }
 
-        td p {
-            height: 50px;
-            overflow-y: hidden;
-            text-overflow: ellipsis;
-        }
-   
-
+        
 </style>
 
 @section _Header
@@ -34,66 +28,30 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
-            <div class="panel-heading">
-                Quản lý Bài Đăng
+            <div class="panel-heading" style="display: flex; justify-content:center;">
+                <p style="font-weight:1000;font-size:large; color: white">Post Management</p>
+                
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
+                <div class="bs-example" style="text-align:right; padding-bottom:10px;">
+                    <div class="btn-group">
+                        @Html.DropDownListFor(model => model.category_id, (SelectList)ViewBag.Category, " --- All posts --- ",
+                                                                        new { @class = "form-control", @id = "Category" })
+                    </div>
 
-                    <p style="text-align:right">
-                        <a href="@Url.Action("Create", "posts", new { })" class="btn btn-primary" data_modal="">
-                            <span class='glyphicon glyphicon-plus'></span> Thêm mới
+                    <p style="text-align:right; display: inline-block">
+                        <a href="@Url.Action("Create", "posts", new { })" class="btn btn-success" data_modal="">
+                            <span class='glyphicon glyphicon-plus'></span> Add post
                         </a>
                     </p>
-
-
-                    <table class="table table-striped table-hover table-bordered pt-5" id="dataTables-example" style="width:100%">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Id</th>
-                                <th>Title</th>
-                                <th>Date of post</th>
-                                <th>Content</th>
-                                <th>Category</th>
-                                <th>User</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{ var Number = 1; }
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@Html.Raw(Number++)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.title)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.created_at)</td>
-                                    <td>@Html.Raw(item.content.Length > 100 ? item.content.Substring(0, 48) + "..." : item.content)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.category.name)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.user.full_name)</td>
-                                    <td class="text-center">
-                                        @*@Html.ActionLink("Sửa", "Edit", new { id = item.post_id }, new { @class = "btn btn-warning btn-sm mx-1" })
-                                @Html.ActionLink("Chi tiết", "Details", new { id = item.post_id }, new { @class = "btn btn-info btn-sm mx-1" })
-                                @Html.ActionLink("Xóa", "Delete", new { id = item.post_id }, new { @class = "btn btn-danger btn-sm mx-1" })*@
-
-                                        <a href="@Url.Action("Edit", "posts", new { id = item.post_id })" class="btn btn-default", style = "font-size: 10px; padding: 5px 10px;" }>
-                                            <span class='glyphicon glyphicon-pencil'></span>
-                                        </a>
-                                        <a href="@Url.Action("Details", "posts", new { id = item.post_id })" class="btn btn-primary", style = "font-size: 10px; padding: 5px 10px;" }>
-                                            <span class='glyphicon glyphicon-zoom-in'></span>
-                                        </a>
-                                        <a href="@Url.Action("Delete", "posts", new { id = item.post_id })" class="btn btn-danger", style = "font-size: 10px; padding: 5px 10px;" }>
-                                            <span class='glyphicon glyphicon-trash'></span>
-                                        </a>
-
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                </div>
+                <div id="getPost"></div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 @section _Footer
@@ -102,12 +60,33 @@
     <script src="/Areas/admin/Content/vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="/Areas/admin/Content/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="/Areas/admin/Content/vendor/datatables-responsive/dataTables.responsive.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').DataTable({
-                responsive: true
-            });
+    // Định nghĩa hàm getPost bên trong $(document).ready()
+    function getPost() {
+        var CategoryId = $('#Category').val();
+        $.ajax({
+            url: '@Url.Action("getPost", "posts")',  // Đảm bảo URL chính xác
+            type: "GET",
+            data: { id: CategoryId },
+            success: function (data) {
+                $("#getPost").html(data);
+            },
+            error: function (data) {
+                alert("Có lỗi xảy ra.");
+            }
         });
+    }
+
+    // Gọi hàm getPost lần đầu khi trang tải
+    getPost();
+
+    // Gọi lại hàm getPost khi thay đổi lựa chọn category
+    $("#Category").change(function () {
+        getPost();
+    });
+});
+
     </script>
 }
+

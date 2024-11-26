@@ -8,7 +8,7 @@
     <div class="col-lg-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                Thêm mới Bài Đăng
+                Add new post
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -30,7 +30,7 @@
                 </div>*@
 
                         <div class="form-group">
-                            @Html.Label("Tiêu đề", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
@@ -46,7 +46,7 @@
                 </div>*@
 
                         <div class="form-group">
-                            @Html.Label("Nội dung", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Label(" Content", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @*@Html.TextAreaFor(model => model.content, new { htmlAttributes = new { @class = "form-control", @rows=5 } })*@
                                 @Html.TextAreaFor(model => model.content, new { @class = "form-control", @rows = 5 })
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.Label("Người đăng", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Label(" Author", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.Label("Thể loại", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Label(" Category", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
@@ -73,13 +73,13 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Thêm" class="btn btn-success" />
+                                <input type="submit" value="Add" class="btn btn-success" />
                             </div>
                         </div>
                     </div>
                 }
                 <div>
-                    @Html.ActionLink("Quay lại", "Index")
+                    @Html.ActionLink("Back to list", "Index")
                 </div>
             </div>
         </div>
