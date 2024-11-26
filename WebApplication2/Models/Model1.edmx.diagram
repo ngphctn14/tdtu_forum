@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="ForumnManagerModel.category" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ForumnManagerModel.comment" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ForumnManagerModel.post" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ForumnManagerModel.user" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ForumnManagerModel.user" Width="1.5" PointX="8.5" PointY="1.5" IsExpanded="true" />
         <AssociationConnector Association="ForumnManagerModel.FK__attachmen__post___35BCFE0A" ManuallyRouted="false" />
         <AssociationConnector Association="ForumnManagerModel.FK__post__category_i__173876EA" ManuallyRouted="false" />
         <AssociationConnector Association="ForumnManagerModel.FK__comment__post_id__1BFD2C07" ManuallyRouted="false" />

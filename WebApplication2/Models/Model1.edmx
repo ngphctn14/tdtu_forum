@@ -107,42 +107,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__comment__post_id__1BFD2C07">
-          <End Role="post" Type="Self.post" Multiplicity="0..1" />
-          <End Role="comment" Type="Self.comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="post">
-              <PropertyRef Name="post_id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="post_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__comment__user_id__1CF15040">
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
-          <End Role="comment" Type="Self.comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__comment_l__comme__2B3F6F97">
-          <End Role="comment" Type="Self.comment" Multiplicity="1" />
-          <End Role="comment_likes" Type="Self.comment_likes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="comment">
-              <PropertyRef Name="comment_id" />
-            </Principal>
-            <Dependent Role="comment_likes">
-              <PropertyRef Name="comment_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__comment_l__user___2A4B4B5E">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="comment_likes" Type="Self.comment_likes" Multiplicity="*" />
@@ -164,30 +128,6 @@
             </Principal>
             <Dependent Role="post">
               <PropertyRef Name="category_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__post__user_id__164452B1">
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
-          <End Role="post" Type="Self.post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="post">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__post_like__post___25869641">
-          <End Role="post" Type="Self.post" Multiplicity="1" />
-          <End Role="post_likes" Type="Self.post_likes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="post">
-              <PropertyRef Name="post_id" />
-            </Principal>
-            <Dependent Role="post_likes">
-              <PropertyRef Name="post_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -227,6 +167,76 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_attachment_post">
+          <End Role="post" Type="Self.post" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="attachment" Type="Self.attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="attachment">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_likes_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="comment_likes" Type="Self.comment_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comment_likes">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_likes_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="post_likes" Type="Self.post_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="post_likes">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ForumnManagerModelStoreContainer">
           <EntitySet Name="attachment" EntityType="Self.attachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
@@ -242,18 +252,6 @@
             <End Role="post" EntitySet="post" />
             <End Role="attachment" EntitySet="attachment" />
           </AssociationSet>
-          <AssociationSet Name="FK__comment__post_id__1BFD2C07" Association="Self.FK__comment__post_id__1BFD2C07">
-            <End Role="post" EntitySet="post" />
-            <End Role="comment" EntitySet="comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__comment__user_id__1CF15040" Association="Self.FK__comment__user_id__1CF15040">
-            <End Role="user" EntitySet="user" />
-            <End Role="comment" EntitySet="comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__comment_l__comme__2B3F6F97" Association="Self.FK__comment_l__comme__2B3F6F97">
-            <End Role="comment" EntitySet="comment" />
-            <End Role="comment_likes" EntitySet="comment_likes" />
-          </AssociationSet>
           <AssociationSet Name="FK__comment_l__user___2A4B4B5E" Association="Self.FK__comment_l__user___2A4B4B5E">
             <End Role="user" EntitySet="user" />
             <End Role="comment_likes" EntitySet="comment_likes" />
@@ -261,14 +259,6 @@
           <AssociationSet Name="FK__post__category_i__173876EA" Association="Self.FK__post__category_i__173876EA">
             <End Role="category" EntitySet="category" />
             <End Role="post" EntitySet="post" />
-          </AssociationSet>
-          <AssociationSet Name="FK__post__user_id__164452B1" Association="Self.FK__post__user_id__164452B1">
-            <End Role="user" EntitySet="user" />
-            <End Role="post" EntitySet="post" />
-          </AssociationSet>
-          <AssociationSet Name="FK__post_like__post___25869641" Association="Self.FK__post_like__post___25869641">
-            <End Role="post" EntitySet="post" />
-            <End Role="post_likes" EntitySet="post_likes" />
           </AssociationSet>
           <AssociationSet Name="FK__post_like__user___24927208" Association="Self.FK__post_like__user___24927208">
             <End Role="user" EntitySet="user" />
@@ -281,6 +271,26 @@
           <AssociationSet Name="FK__user_foll__user___300424B4" Association="Self.FK__user_foll__user___300424B4">
             <End Role="user" EntitySet="user" />
             <End Role="user_followers" EntitySet="user_followers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_attachment_post" Association="Self.FK_attachment_post">
+            <End Role="post" EntitySet="post" />
+            <End Role="attachment" EntitySet="attachment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_likes_user" Association="Self.FK_comment_likes_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment_likes" EntitySet="comment_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_user" Association="Self.FK_comment_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_likes_user" Association="Self.FK_post_likes_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="post_likes" EntitySet="post_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_user" Association="Self.FK_post_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="post" EntitySet="post" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>

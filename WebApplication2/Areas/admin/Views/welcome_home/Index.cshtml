@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebApplication2.Models.welcome_home>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+@section _Header
+{
+    <!-- DataTables CSS -->
+    <link href="/Areas/admin/Content/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+    <link href="/Areas/admin/Content/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.welcome_title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.link)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.welcome_title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.link)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.welcome_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.welcome_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.welcome_id })
+            </td>
+        </tr>
+    }
+
+</table>
+@section _Footer
+{
+    <!-- DataTables JavaScript -->
+    <script src="/Areas/admin/Content/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/Areas/admin/Content/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/Areas/admin/Content/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+}
