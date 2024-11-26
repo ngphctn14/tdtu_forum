@@ -9,7 +9,7 @@ namespace WebApplication2.Controllers
 {
     public class HomeController : Controller
     {
-        ForumnManagerEntities6 _db = new ForumnManagerEntities6();
+        ForumnManagerEntities7 _db = new ForumnManagerEntities7();
 
         public ActionResult Index()
         {

@@ -11,7 +11,7 @@ namespace WebApplication2.Controllers
     public class LoginController : Controller
     {
 
-        private ForumnManagerEntities6 _db = new ForumnManagerEntities6();
+        private ForumnManagerEntities7 _db = new ForumnManagerEntities7();
 
         // GET: Login
         [HttpGet]

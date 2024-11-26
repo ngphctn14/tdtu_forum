@@ -189,6 +189,9 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -3408,13 +3411,6 @@
     <Content Include="Views\Post\getPostByCategoryTop5.cshtml" />
     <Content Include="Views\Post\getPostByCategory.cshtml" />
     <Content Include="Views\Home\getNews.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Views\Post\getMostResponsesPost.cshtml" />
     <Content Include="Views\Post\getRecentPost.cshtml" />
     <Content Include="Views\Post\getRecentlyAnswers.cshtml" />
@@ -3427,7 +3423,6 @@
     <Content Include="Views\Post\getPostsOfAUser.cshtml" />
     <Content Include="Views\User\allUsers.cshtml" />
     <Content Include="Views\Post\get15RecentPosts.cshtml" />
-
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Signup\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -3435,7 +3430,6 @@
     <Content Include="Scripts\ckeditor5\ckeditor5.css.map" />
     <Content Include="Scripts\ckeditor5\ckeditor5.js.map" />
     <Content Include="Scripts\ckeditor5\ckeditor5.umd.js.map" />
-
     <Content Include="Areas\admin\Views\web.config" />
     <Content Include="Areas\admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\admin\Views\Shared\_Layout.cshtml" />
@@ -3724,7 +3718,13 @@
     <Content Include="Areas\admin\Views\posts\Details.cshtml" />
     <Content Include="Areas\admin\Views\posts\Edit.cshtml" />
     <Content Include="Areas\admin\Views\posts\Index.cshtml" />
-
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -15,10 +15,10 @@ namespace WebApplication2.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ForumnManagerEntities6 : DbContext
+    public partial class ForumnManagerEntities7 : DbContext
     {
-        public ForumnManagerEntities6()
-            : base("name=ForumnManagerEntities6")
+        public ForumnManagerEntities7()
+            : base("name=ForumnManagerEntities7")
         {
         }
     
@@ -31,9 +31,10 @@ namespace WebApplication2.Models
         public virtual DbSet<category> categories { get; set; }
         public virtual DbSet<comment> comments { get; set; }
         public virtual DbSet<post> posts { get; set; }
+        public virtual DbSet<role> roles { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<welcome_home> welcome_home { get; set; }
-        public virtual DbSet<role> roles { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

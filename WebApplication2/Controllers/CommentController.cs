@@ -12,7 +12,7 @@ namespace WebApplication2.Controllers
     public class CommentController : Controller
     {
 
-        ForumnManagerEntities6 _db = new ForumnManagerEntities6();
+        private ForumnManagerEntities7 _db = new ForumnManagerEntities7();
 
         // GET: Comment
         public ActionResult Index()

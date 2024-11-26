@@ -12,7 +12,7 @@ namespace WebApplication2.Areas.admin.Controllers
 {
     public class usersController : Controller
     {
-        private ForumnManagerEntities6 db = new ForumnManagerEntities6();
+        private ForumnManagerEntities7 db = new ForumnManagerEntities7();
 
         // GET: admin/users
         public ActionResult Index()

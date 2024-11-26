@@ -11,7 +11,7 @@ namespace WebApplication2.Controllers
     public class UserController : Controller
     {
 
-        ForumnManagerEntities6 _db = new ForumnManagerEntities6();
+        ForumnManagerEntities7 _db = new ForumnManagerEntities7();
 
         // GET: User
         public ActionResult UserInfo(int id)

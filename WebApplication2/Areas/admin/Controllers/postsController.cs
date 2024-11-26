@@ -13,7 +13,7 @@ namespace WebApplication2.Areas.admin.Controllers
 {
     public class postsController : Controller
     {
-        private ForumnManagerEntities6 db = new ForumnManagerEntities6();
+        private ForumnManagerEntities7 db = new ForumnManagerEntities7();
 
         // GET: admin/posts
         public ActionResult Index()
