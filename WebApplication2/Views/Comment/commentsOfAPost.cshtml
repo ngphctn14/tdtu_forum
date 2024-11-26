@@ -9,13 +9,22 @@
                     <ul id="comments-list" class="comments-list">
                         <li>
                              <div class="comment-main-level">
-                                <!-- Avatar -->
-                                <div class="comment-avatar"><img src="~/Content/image/images.png" alt=""></div>
-                                <!-- Contenedor del Comentario -->
+                                <div class="comment-avatar">
+                                    <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">
+                                        @if (!string.IsNullOrEmpty(i.user.profile_picture))
+                                        {
+                                            <img src="~/Uploads/Users/@i.user.user_id/@i.user.profile_picture" alt="Profile Picture">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                                        }
+                                    </a>
+                                </div>
                                 <div class="comment-box">
                                     <div class="comment-head">
-                                        <h6 class="comment-name"><a href="@Url.Action("Index", "User", new {id = i.user_id})">@i.user.full_name</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> @i.commented_at</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                    <div class="comment-content"> @i.content </div>
+                                        <h6 class="comment-name"><a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">@i.user.username</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> @i.commented_at</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
+                                    <div class="comment-content"> @Html.Raw(i.content) </div>
                                 </div>
                             </div>
                         </li>

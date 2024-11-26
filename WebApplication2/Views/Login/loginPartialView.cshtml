@@ -1,0 +1,23 @@
+﻿@model WebApplication2.Models.user
+
+@if (Session["Username"] == null)
+{
+<div class="login-part2389">
+    <h4>Login</h4>
+    @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.username, "", new { @class = "form-control", @placeholder = "Username" })
+
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.password, new { @class = "form-control", @placeholder = "Password" })
+        </div>
+        <div class="text-right">
+            <input type="submit" class="button" value="Login"/>
+        </div>
+    }
+</div>
+}
+

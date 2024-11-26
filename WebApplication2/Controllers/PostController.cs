@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication2.Helpers;
 using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
@@ -109,5 +111,114 @@ namespace WebApplication2.Controllers
                     select posts).Take(15);
             return PartialView(v.ToList());
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult CreatePost(string title, string content, int category_id, IEnumerable<HttpPostedFileBase> attachments)
+        {
+            if (ModelState.IsValid)
+            {
+                post post = new post();
+                post.user_id = (int)Session["Id"];
+                post.title = title;
+                post.content = content;
+                post.category_id = category_id;
+                post.created_at = DateTime.Now;
+
+                try
+                {
+                    var maxId = _db.Database.SqlQuery<int>("SELECT ISNULL(MAX(post_id), 0) FROM [post]").First();
+                    post.post_id = maxId + 1;
+
+                    var sql = "INSERT INTO [post] (post_id, title, content, created_at, user_id, category_id) VALUES (@p0, @p1, @p2, @p3, @p4, @p5)";
+                    _db.Database.ExecuteSqlCommand(sql, 
+                        post.post_id,
+                        post.title,
+                        post.content,
+                        post.created_at,
+                        post.user_id,
+                        post.category_id);
+
+                    if (attachments != null)
+                    {
+                        var savedFiles = FileHelper.SavePostFiles(post.post_id, attachments);
+                        
+                        foreach (var fileName in savedFiles)
+                        {
+                            var maxAttachId = _db.Database.SqlQuery<int>("SELECT ISNULL(MAX(attachment_id), 0) FROM [attachment]").First();
+                            var attachSql = @"INSERT INTO [attachment] (attachment_id, post_id, file_name) 
+                                            VALUES (@p0, @p1, @p2)";
+                            
+                            _db.Database.ExecuteSqlCommand(attachSql,
+                                maxAttachId + 1,
+                                post.post_id,
+                                fileName);
+                        }
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Error occurred while creating a post. Please try again.");
+                    return View(post);
+                }
+            }
+            return View();
+        }
+        
+        public FileResult DownloadAttachment(int id)
+        {
+            var attachment = _db.attachments.Find(id);
+            if (attachment == null)
+                throw new HttpException(404, "File not found");
+
+            string filePath = Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory, 
+                "Uploads", 
+                "Posts", 
+                attachment.post_id.ToString(), 
+                attachment.file_name);
+
+            return File(filePath, "application/octet-stream", attachment.file_name);
+        }
+
+        [HttpPost]
+        public ActionResult LikePost(int post_id)
+        {
+            int currentUserId = Convert.ToInt32(Session["Id"]);
+
+            var post = _db.posts.Find(post_id);
+            var user = _db.users.Find(currentUserId);
+
+            var existingLike = post.users.Contains(user);
+
+            bool isLiked;
+
+            if (!existingLike)
+            {
+                post.users.Add(user);
+
+                isLiked = true;
+            }
+            else
+            {
+                post.users.Remove(user);
+                isLiked = false;
+            }
+
+            _db.SaveChanges();
+
+            int likeCount = post.users.Count;
+
+            return Json(new
+            {
+                success = true,
+                isLiked = isLiked,
+                likeCount = likeCount
+            });
+        }
     }
+
+
 }

@@ -17,8 +17,6 @@ namespace WebApplication2.Models
         public int attachment_id { get; set; }
         public Nullable<int> post_id { get; set; }
         public string file_name { get; set; }
-        public string file_path { get; set; }
-    
         public virtual post post { get; set; }
     }
 }

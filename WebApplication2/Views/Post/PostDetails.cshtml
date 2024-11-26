@@ -1,8 +1,10 @@
 ﻿@model WebApplication2.Models.post
 
 @{
-    ViewBag.Title = Model.title;
+    ViewBag.Title = "Post | " + Model.title;
+    var url = @Url.Action("LikePost", "Post");
 }
+
 
 <body>
     
@@ -25,7 +27,8 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="post-title-left129">
-                                        <h3>@Model.title</h3> </div>
+                                        <h3>@Model.title</h3>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="post-que-rep-rihght320"> <a href=@Url.Action("Index", "Category", new {id = Model.category_id})><i class="fa fa-question-circle" aria-hidden="true"></i> @Model.category.name</a></div>
@@ -33,26 +36,91 @@
                             </div>
                         </div>
                         <div class="post-details-info1982">
-                            <p>@Html.Raw(Model.content)</p>
+
+                            @Html.Raw(Model.content)
+
                             <hr>
+                            <div class="post-attachments">
+                                @if (Model.attachments != null && Model.attachments.Any())
+                                {
+                                    <h4>Attachments</h4>
+                                    <ul>
+                                        @foreach (var attachment in Model.attachments)
+                                        {
+                                            <li style="margin:0px 0px 0px 30px">
+                                                <a href="@Url.Action("DownloadAttachment", "Post", new { id = attachment.attachment_id })">
+                                                    @attachment.file_name
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                    <hr>
+                                }
+                            </div>
                             <div class="post-footer29032">
-                                <div class="left-user12923 left-user12923-repeat">
-                                    <a href="#"><img src="~/Content/image/images.png" alt="image"> </a>
-                                    <a href="@Url.Action("Index", "User", new {id = Model.user_id})" class="">@Model.user.full_name</a>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="post-footer29032 d-flex justify-content-between align-items-center">
+                                            <div class="left-user12923 d-flex align-items-center">
+                                                <a href="@Url.Action("UserInfo", "User", new {id = Model.user_id})">
+                                                    @if (!string.IsNullOrEmpty(Model.user.profile_picture))
+                                                    {
+                                                        <img src="~/Uploads/Users/@Model.user_id/@Model.user.profile_picture" alt="Profile Picture">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                                                    }
+                                                </a>
+                                                <a href="@Url.Action("UserInfo", "User", new { id = Model.user_id })" class="user-name">@Model.user.username</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="">
+                                            <i class="fa fa-clock-o clock2 me-3" aria-hidden="true"> @Model.created_at</i>
+
+                                            <i class="fa fa-commenting commenting2" aria-hidden="true"> @Model.comments.Count Comments</i>
+
+                                            <i class="likeBtn fa @(Model.users.Any(u => u.user_id == Convert.ToInt32(Session["Id"])) ? "fa-thumbs-up" : "fa-thumbs-o-up")" data-id="@Model.post_id" data-url="@url" aria-hidden="true">
+                                            </i>
+                                            <a href="#">
+                                                <span class="single-question-vote-result fa postDetailsLikesBtn" data-toggle="modal" data-target="#postDetailsLikesModal">@Model.users.Count Likes</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="l-side2023"> <i class="fa fa-clock-o clock2" aria-hidden="true"> @Model.created_at</i> <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true"> @Model.comments.Count</i></a> </div>
-                                <div class="l-rightside39">
-                                    <button type="button" class="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like"><i class="fa fa-thumbs-o-up " aria-hidden="true"></i></button>
-                                    <span class="single-question-vote-result">@Model.users.Count</span> </div>
                             </div>
                         </div>
                     </div>
-                    <!-- lol-->
-                            @{Html.RenderAction("commentsOfAPost", "Comment", new {post_id = Model.post_id});}
-                    <!-- lol-->
+                    <hr>
+                    <div>
+                        <h3>Comments</h3>
+                    </div>
+                    @{Html.RenderAction("commentsOfAPost", "Comment", new { post_id = Model.post_id });}
+
+                    @if (Session["Username"] != null)
+                    {
+                        <hr>
+                        using (Html.BeginForm("PostComment", "Comment", FormMethod.Post, new { id = "post-comment-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div>
+                                <h3>Your comment</h3>
+                            </div>
+                            <div class="comment-editor">
+                                @Html.TextArea("comment_content", null, new { @id = "comment-editor", @class = "form-control" })
+                                @Html.Hidden("post_id", Model.post_id)
+                                <div id="comment-error" class="text-danger" style="display: none;">
+                                    Please enter a comment before submitting.
+                                </div>
+                                <input type="submit" class="button" style="margin:10px 0px 0px 0px" value="Post your comment" />
+                            </div>
+                        }
+                    }
+
                 </div>
-                <!--                end of col-md-9 -->
-                <!--           strart col-md-3 (side bar)-->
+
                 <aside class="col-md-3 sidebar97239">
                     <div class="categori-part329">
                         <h4>Categories</h4>
@@ -60,29 +128,55 @@
                             @{Html.RenderAction("getDetails", "Category");}
                         </ul>
                     </div>
-                    <!--             social part -->
-                    <!--              login part-->
-                    <div class="login-part2389">
-                        <h4>Login</h4>
-                        <div class="input-group300"> <span><i class="fa fa-user" aria-hidden="true"></i></span>
-                            <input type="text" class="namein309" placeholder="Username"> </div>
-                        <div class="input-group300"> <span><i class="fa fa-lock" aria-hidden="true"></i></span>
-                            <input type="password" class="passin309" placeholder="Name"> </div>
-                        <a href="#">
-                            <button type="button" class="userlogin320">Log In</button>
-                        </a>
-                        <div class="rememberme">
-                            <label>
-                                <input type="checkbox" checked="checked"> Remember Me</label> <a href="#" class="resbutton3892">Register</a> </div>
-                    </div>
-                    <!--               end of Highest points -->
-                    <!--          start tags part-->
-                    <!--          End tags part-->
-                    <!--        start recent post  -->
+
+                    @{Html.RenderAction("loginPartialView", "Login");}
+
                     @{ Html.RenderAction("get15RecentPosts", "Post");}
-                    <!--       end recent post    -->
+
                 </aside>
             </div>
         </div>
     </section>
+    <div class="modal fade" id="postDetailsLikesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Post Likes</h5>
+                </div>
+                <div class="modal-body">
+                    @foreach (var i in Model.users)
+                    {
+                        <div class="user-info-container">
+                            <div class="user-image2934">
+                                <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">
+                                    @if (!string.IsNullOrEmpty(i.profile_picture))
+                                    {
+                                        <img src="~/Uploads/Users/@i.user_id/@i.profile_picture" alt="Profile Picture">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                                    }
+                                </a>
+                            </div>
+                            <div class="user-username">
+                                <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">
+                                    @i.username
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <script>
+                        $('.postDetailsLikesBtn').on('click', function () {
+                            $('#postDetailsLikesModal').modal('show');
+                        });
+                    </script>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
