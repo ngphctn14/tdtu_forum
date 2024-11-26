@@ -5,8 +5,9 @@
 @foreach (var i in Model)
 {
     <div class="post-details021"> <a href="@Url.Action("PostDetails", "Post", new {id = i.post_id})"><h5>@i.title</h5></a>
+
     <small style="color: #848991">@i.created_at</small>
-    <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><small style="color: #848991">@i.category.name</small></a>
+    <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><small style="color: #848991">&nbsp;@i.category.name</small></a>
     </div>
 }
 </div>

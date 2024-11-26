@@ -7,6 +7,7 @@
 
 
 <body>
+    
     <section class="header-descriptin329">
         <div class="container">
             <h3>Post Details</h3>
@@ -35,7 +36,9 @@
                             </div>
                         </div>
                         <div class="post-details-info1982">
+
                             @Html.Raw(Model.content)
+
                             <hr>
                             <div class="post-attachments">
                                 @if (Model.attachments != null && Model.attachments.Any())

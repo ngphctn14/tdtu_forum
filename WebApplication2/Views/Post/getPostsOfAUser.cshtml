@@ -28,17 +28,20 @@
                             </a>
                         </h3>
                     </div>
+
                     <hr>
                     <div class="ques-icon-info3293">
                         <i class="fa fa-clock-o" aria-hidden="true"> @i.created_at</i>
-                        <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><i class="fa fa-question-circle-o" aria-hidden="true"> @i.category.name</i></a>
+                        <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp; @i.category.name</i></a>
                     </div>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="ques-type302">
+
                     <a href="@Url.Action("PostDetails", "Post", new { id = i.post_id })">
                         <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> @i.comments.Count Comments</i></button>
+
                     </a>
                     <button type="button" class="q-type23 button-ques2973 likesBtn" data-toggle="modal" data-target="#@String.Concat("likesPostsOfAUserModal", i.post_id)">
                         <i class="fa fa-user-circle-o" aria-hidden="true"> @i.users.Count Likes</i>
