@@ -1,14 +1,22 @@
 ﻿@model IEnumerable<WebApplication2.Models.post>
 
-
 @foreach (var i in Model)
 {
     <div class="question-type2033">
         <div class="row">
             <div class="col-md-1">
                 <div class="left-user12923 left-user12923-repeat">
-                    <a href="#"><img src="~/Content/image/images.png" alt="image"> </a>
-                    <a href="@Url.Action("Index", "User", new {id = i.user_id})" class="">@i.user.full_name</a>
+                    <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">
+                        @if (!string.IsNullOrEmpty(i.user.profile_picture))
+                        {
+                            <img src="~/Uploads/Users/@i.user.user_id/@i.user.profile_picture" alt="Profile Picture">
+                        }
+                        else
+                        {
+                            <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                        }
+                    </a>
+                    <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})" class="">@i.user.username</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -20,18 +28,6 @@
                             </a>
                         </h3>
                     </div>
-                    <div class="ques-details10018">
-                        <p>
-                            @if (i.content.Length >= 200)
-                            {
-                                @($"{i.content.Substring(0, 200)}...")
-                            }
-                            else
-                            {
-                                @i.content
-                            }
-                        </p>
-                    </div>
                     <hr>
                     <div class="ques-icon-info3293">
                         <i class="fa fa-clock-o" aria-hidden="true"> @i.created_at</i>
@@ -41,16 +37,55 @@
             </div>
             <div class="col-md-2">
                 <div class="ques-type302">
-                    <a href="#">
-                        <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> @i.comments.Count answer</i></button>
+                    <a href="@Url.Action("PostDetails", "Post", new { id = i.post_id })">
+                        <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> @i.comments.Count Comments</i></button>
                     </a>
-                    <a href="#">
-                        <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true"> @i.users.Count Likes</i> </button>
-                    </a>
+                    <button type="button" class="q-type23 button-ques2973 likesBtn" data-toggle="modal" data-target="#@String.Concat("likesByCategoryTop5Modal", i.post_id)">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"> @i.users.Count Likes</i>
+                    </button>
+                    <div class="modal fade" id="@String.Concat("likesByCategoryTop5Modal", i.post_id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Post Likes</h5>
+                                </div>
+                                <div class="modal-body">
+                                    @foreach (var j in i.users)
+                                    {
+                                        <div class="user-info-container">
+                                            <div class="user-image2934">
+                                                <a href="@Url.Action("UserInfo", "User", new {id = j.user_id})">
+                                                    @if (!string.IsNullOrEmpty(j.profile_picture))
+                                                    {
+                                                        <img src="~/Uploads/Users/@j.user_id/@j.profile_picture" alt="Profile Picture">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                                                    }
+                                                </a>
+                                            </div>
+                                            <div class="user-username">
+                                                <a href="@Url.Action("UserInfo", "User", new {id = j.user_id})">
+                                                    @j.username
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                    <script>
+                                    $('.likesBtn').on('click', function () {
+                                        $('#@String.Concat("likesByCategoryTop5Modal", i.post_id)').modal('show');
+                                    });
+                                    </script>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 }
-
-

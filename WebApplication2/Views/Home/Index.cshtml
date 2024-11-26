@@ -1,21 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "TDTU Forum";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
-<!--======= welcome section on top background=====-->
 @{ Html.RenderAction("getHomeWelcome", "Home");}
 
-<!-- ======content section/body=====-->
 <section class="main-content920">
     <div class="container">
         <div class="row">
             <div class="col-md-9">
                 @{ Html.RenderAction("getPostsForEachCategory", "Category");}
             </div>
-            <!--end of col-md-9 -->
-            <!--strart col-md-3 (side bar)-->
             <aside class="col-md-3 sidebar97239">
                 <div class="categori-part329">
                     <h4>Categories</h4>
@@ -23,35 +19,8 @@
                         @{Html.RenderAction("getDetails", "Category");}
                     </ul>
                 </div>
-                <!--              login part-->
-                <div class="login-part2389">
-                    <h4>Login</h4>
-                    <div class="input-group300">
-                        <span><i class="fa fa-user" aria-hidden="true"></i></span>
-                        <input type="text" class="namein309" placeholder="Username">
-                    </div>
-                    <div class="input-group300">
-                        <span><i class="fa fa-lock" aria-hidden="true"></i></span>
-                        <input type="password" class="passin309" placeholder="Name">
-                    </div>
-                    <a href="#">
-                        <button type="button" class="userlogin320">Log In</button>
-                    </a>
-                    <div class="rememberme">
-                        <label>
-                            <input type="checkbox" checked="checked"> Remember me
-                        </label> <a href="#" class="resbutton3892">Register</a>
-                    </div>
-                </div>
+                @{ Html.RenderAction("loginPartialView", "Login");}
                 @{Html.RenderAction("get15RecentPosts", "Post");}
-                <!--          End tags part-->
-                <!--        start recent post  -->
-
-                <!--<div class="recent-post3290">
-                    <h4>News</h4>-->
-                    @*@{ Html.RenderAction("getNews", "Home");}*@
-                <!--</div>-->
-                <!--       end recent post    -->
             </aside>
         </div>
     </div>

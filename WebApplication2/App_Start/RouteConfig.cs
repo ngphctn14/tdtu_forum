@@ -19,11 +19,11 @@ namespace WebApplication2
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            //routes.MapRoute(
-            //    name: "Category",
-            //    url: "Category/{id}",
-            //    defaults: new { controller = "Category", action = "Index", id = UrlParameter.Optional }
-            //);
+            routes.MapRoute(
+                name: "Category",
+                url: "Category/{action}/{i}",
+                defaults: new { controller = "Category", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

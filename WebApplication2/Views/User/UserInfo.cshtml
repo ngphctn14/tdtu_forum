@@ -1,0 +1,161 @@
+﻿@model WebApplication2.Models.user
+
+@{
+    ViewBag.Title = "User | " + Model.username;
+}
+
+<style>
+    .profile-picture-container {
+        position: relative;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .profile-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .profile-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+        .profile-overlay i {
+            color: white;
+            font-size: 24px;
+        }
+
+    .profile-picture-container:hover .profile-overlay {
+        opacity: 1;
+    }
+</style>
+
+<body>
+    <section class="header-descriptin329">
+        <div class="container">
+            <h3>User Details</h3>
+            <ol class="breadcrumb breadcrumb839">
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li class="active">User Details</li>
+            </ol>
+        </div>
+    </section>
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <!--    body content-->
+                <div class="col-md-9">
+                    <div class="about-user2039 mt-70">
+                        <div class="user-title3930">
+                            <h3>
+                                About <a href="#">@Model.full_name</a>
+                            </h3>
+                            <hr>
+                        </div>
+                        @if (Model.username.Equals(Session["Username"]))
+                        {
+                            <div class="user-image293">
+                                <div class="profile-picture-container">
+                                    @if (!string.IsNullOrEmpty(Model.profile_picture))
+                                    {
+                                        <img id="currentProfilePic" src="~/Uploads/Users/@Model.user_id/@Model.profile_picture" alt="Profile Picture" class="profile-image">
+                                    }
+                                    else
+                                    {
+                                        <img id="currentProfilePic" src="~/Content/image/images.png" alt="Default Profile Picture" class="profile-image">
+                                    }
+                                    <div class="profile-overlay">
+                                        <i class="fa fa-camera"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            using (Html.BeginForm("UpdateProfilePicture", "User", FormMethod.Post, new { id = "profilePictureForm", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="file" name="profilePicture" id="profilePictureInput" style="display: none;" accept="image/*">
+                            }
+                        }
+                        else
+                        {
+                            <div class="user-image293">
+                                @if (!string.IsNullOrEmpty(Model.profile_picture))
+                                {
+                                    <img src="~/Uploads/Users/@Model.user_id/@Model.profile_picture" alt="Profile Picture">
+                                }
+                                else
+                                {
+                                    <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                                }
+                            </div>
+                        }                        <div class="user-list10039">
+                            <div class="ul-list-user-left29">
+                                <ul>
+                                    <li><i class="fa fa-plus" aria-hidden="true"></i> <strong>Registered:</strong>@Model.created_at</li>
+                                    <li><i class="fa fa-star" aria-hidden="true"></i> <strong>Email:</strong> @Model.email</li>
+                                    @*<li><i class="fa fa-heart" aria-hidden="true"></i> <strong>Last login:</strong> @Model.last_login</li>*@
+
+                                </ul>
+                            </div>
+                            <div class="ul-list-user-right29">
+                                <ul>
+                                    <li><i class="fa fa-heart" aria-hidden="true"></i> <strong>Last login:</strong> @Model.last_login</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                            
+
+                    @{ Html.RenderAction("getPostsOfAUser", "Post", new { user_id = Model.user_id });}
+                    
+                </div>
+                <aside class="col-md-3 sidebar97239">
+                    <div class="categori-part329">
+                        <h4>Categories</h4>
+                        <ul>
+                            @{Html.RenderAction("getDetails", "Category");}
+                        </ul>
+                    </div>
+                    @{Html.RenderAction("loginPartialView", "Login");}
+                    @{Html.RenderAction("get15RecentPosts", "Post");}
+                </aside>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileContainer = document.querySelector('.profile-picture-container');
+            const fileInput = document.getElementById('profilePictureInput');
+            const profileForm = document.getElementById('profilePictureForm');
+
+
+            if (profileContainer) {
+                profileContainer.addEventListener('click', function () {
+                    fileInput.click();
+                });
+            }
+
+            if (fileInput) {
+                fileInput.addEventListener('change', function () {
+                    if (fileInput.files.length > 0) {
+                        profileForm.submit();
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>

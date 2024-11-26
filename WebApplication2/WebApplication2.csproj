@@ -143,6 +143,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Models\attachment.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -167,10 +168,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\NEWS.cs">
+    <Compile Include="Models\post.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\post.cs">
+    <Compile Include="Models\role.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
@@ -249,15 +256,160 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\ckeditor5\ckeditor5-content.css" />
+    <Content Include="Scripts\ckeditor5\ckeditor5-editor.css" />
+    <Content Include="Scripts\ckeditor5\ckeditor5.css" />
+    <Content Include="Scripts\ckeditor5\ckeditor5.js" />
+    <Content Include="Scripts\ckeditor5\ckeditor5.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\af.js" />
+    <Content Include="Scripts\ckeditor5\translations\af.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ar.js" />
+    <Content Include="Scripts\ckeditor5\translations\ar.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ast.js" />
+    <Content Include="Scripts\ckeditor5\translations\ast.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\az.js" />
+    <Content Include="Scripts\ckeditor5\translations\az.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\bg.js" />
+    <Content Include="Scripts\ckeditor5\translations\bg.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\bn.js" />
+    <Content Include="Scripts\ckeditor5\translations\bn.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\bs.js" />
+    <Content Include="Scripts\ckeditor5\translations\bs.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ca.js" />
+    <Content Include="Scripts\ckeditor5\translations\ca.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\cs.js" />
+    <Content Include="Scripts\ckeditor5\translations\cs.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\da.js" />
+    <Content Include="Scripts\ckeditor5\translations\da.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\de-ch.js" />
+    <Content Include="Scripts\ckeditor5\translations\de-ch.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\de.js" />
+    <Content Include="Scripts\ckeditor5\translations\de.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\el.js" />
+    <Content Include="Scripts\ckeditor5\translations\el.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\en-au.js" />
+    <Content Include="Scripts\ckeditor5\translations\en-au.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\en-gb.js" />
+    <Content Include="Scripts\ckeditor5\translations\en-gb.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\en.js" />
+    <Content Include="Scripts\ckeditor5\translations\en.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\eo.js" />
+    <Content Include="Scripts\ckeditor5\translations\eo.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\es-co.js" />
+    <Content Include="Scripts\ckeditor5\translations\es-co.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\es.js" />
+    <Content Include="Scripts\ckeditor5\translations\es.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\et.js" />
+    <Content Include="Scripts\ckeditor5\translations\et.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\eu.js" />
+    <Content Include="Scripts\ckeditor5\translations\eu.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\fa.js" />
+    <Content Include="Scripts\ckeditor5\translations\fa.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\fi.js" />
+    <Content Include="Scripts\ckeditor5\translations\fi.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\fr.js" />
+    <Content Include="Scripts\ckeditor5\translations\fr.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\gl.js" />
+    <Content Include="Scripts\ckeditor5\translations\gl.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\gu.js" />
+    <Content Include="Scripts\ckeditor5\translations\gu.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\he.js" />
+    <Content Include="Scripts\ckeditor5\translations\he.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\hi.js" />
+    <Content Include="Scripts\ckeditor5\translations\hi.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\hr.js" />
+    <Content Include="Scripts\ckeditor5\translations\hr.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\hu.js" />
+    <Content Include="Scripts\ckeditor5\translations\hu.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\hy.js" />
+    <Content Include="Scripts\ckeditor5\translations\hy.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\id.js" />
+    <Content Include="Scripts\ckeditor5\translations\id.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\it.js" />
+    <Content Include="Scripts\ckeditor5\translations\it.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ja.js" />
+    <Content Include="Scripts\ckeditor5\translations\ja.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\jv.js" />
+    <Content Include="Scripts\ckeditor5\translations\jv.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\kk.js" />
+    <Content Include="Scripts\ckeditor5\translations\kk.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\km.js" />
+    <Content Include="Scripts\ckeditor5\translations\km.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\kn.js" />
+    <Content Include="Scripts\ckeditor5\translations\kn.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ko.js" />
+    <Content Include="Scripts\ckeditor5\translations\ko.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ku.js" />
+    <Content Include="Scripts\ckeditor5\translations\ku.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\lt.js" />
+    <Content Include="Scripts\ckeditor5\translations\lt.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\lv.js" />
+    <Content Include="Scripts\ckeditor5\translations\lv.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ms.js" />
+    <Content Include="Scripts\ckeditor5\translations\ms.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\nb.js" />
+    <Content Include="Scripts\ckeditor5\translations\nb.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ne.js" />
+    <Content Include="Scripts\ckeditor5\translations\ne.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\nl.js" />
+    <Content Include="Scripts\ckeditor5\translations\nl.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\no.js" />
+    <Content Include="Scripts\ckeditor5\translations\no.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\oc.js" />
+    <Content Include="Scripts\ckeditor5\translations\oc.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\pl.js" />
+    <Content Include="Scripts\ckeditor5\translations\pl.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\pt-br.js" />
+    <Content Include="Scripts\ckeditor5\translations\pt-br.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\pt.js" />
+    <Content Include="Scripts\ckeditor5\translations\pt.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ro.js" />
+    <Content Include="Scripts\ckeditor5\translations\ro.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ru.js" />
+    <Content Include="Scripts\ckeditor5\translations\ru.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\si.js" />
+    <Content Include="Scripts\ckeditor5\translations\si.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\sk.js" />
+    <Content Include="Scripts\ckeditor5\translations\sk.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\sl.js" />
+    <Content Include="Scripts\ckeditor5\translations\sl.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\sq.js" />
+    <Content Include="Scripts\ckeditor5\translations\sq.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\sr-latn.js" />
+    <Content Include="Scripts\ckeditor5\translations\sr-latn.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\sr.js" />
+    <Content Include="Scripts\ckeditor5\translations\sr.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\sv.js" />
+    <Content Include="Scripts\ckeditor5\translations\sv.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\th.js" />
+    <Content Include="Scripts\ckeditor5\translations\th.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ti.js" />
+    <Content Include="Scripts\ckeditor5\translations\ti.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\tk.js" />
+    <Content Include="Scripts\ckeditor5\translations\tk.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\tr.js" />
+    <Content Include="Scripts\ckeditor5\translations\tr.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\tt.js" />
+    <Content Include="Scripts\ckeditor5\translations\tt.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ug.js" />
+    <Content Include="Scripts\ckeditor5\translations\ug.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\uk.js" />
+    <Content Include="Scripts\ckeditor5\translations\uk.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\ur.js" />
+    <Content Include="Scripts\ckeditor5\translations\ur.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\uz.js" />
+    <Content Include="Scripts\ckeditor5\translations\uz.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\vi.js" />
+    <Content Include="Scripts\ckeditor5\translations\vi.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\zh-cn.js" />
+    <Content Include="Scripts\ckeditor5\translations\zh-cn.umd.js" />
+    <Content Include="Scripts\ckeditor5\translations\zh.js" />
+    <Content Include="Scripts\ckeditor5\translations\zh.umd.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Post\Index.cshtml" />
     <Content Include="Views\Category\getDetails.cshtml" />
     <Content Include="Views\Category\getDetailsSelect.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Signup\Index.cshtml" />
     <Content Include="Views\Home\getHomeWelcome.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Post\getPostByCategoryTop5.cshtml" />
     <Content Include="Views\Post\getPostByCategory.cshtml" />
     <Content Include="Views\Home\getNews.cshtml" />
@@ -275,11 +427,18 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\getPostsForEachCategory.cshtml" />
     <Content Include="Views\Post\PostDetails.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\UserInfo.cshtml" />
     <Content Include="Views\Comment\commentsOfAPost.cshtml" />
     <Content Include="Views\Post\getPostsOfAUser.cshtml" />
     <Content Include="Views\User\allUsers.cshtml" />
     <Content Include="Views\Post\get15RecentPosts.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Signup\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\loginPartialView.cshtml" />
+    <Content Include="Scripts\ckeditor5\ckeditor5.css.map" />
+    <Content Include="Scripts\ckeditor5\ckeditor5.js.map" />
+    <Content Include="Scripts\ckeditor5\ckeditor5.umd.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -340,7 +499,82 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\af.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ar.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ast.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\az.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\bg.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\bn.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\bs.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ca.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\cs.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\da.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\de-ch.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\de.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\el.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\en-au.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\en-gb.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\en.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\eo.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\es-co.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\es.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\et.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\eu.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\fa.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\fi.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\fr.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\gl.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\gu.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\he.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\hi.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\hr.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\hu.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\hy.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\id.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\it.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ja.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\jv.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\kk.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\km.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\kn.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ko.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ku.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\lt.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\lv.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ms.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\nb.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ne.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\nl.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\no.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\oc.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\pl.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\pt-br.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\pt.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ro.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ru.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\si.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\sk.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\sl.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\sq.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\sr-latn.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\sr.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\sv.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\th.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ti.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\tk.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\tr.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\tt.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ug.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\uk.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\ur.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\uz.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\vi.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\zh-cn.d.ts" />
+    <TypeScriptCompile Include="Scripts\ckeditor5\translations\zh.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

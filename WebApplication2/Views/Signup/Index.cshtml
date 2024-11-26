@@ -1,68 +1,102 @@
-﻿
+﻿@model WebApplication2.Models.user
+
 @{
+    ViewBag.Title = "Sign Up";
     Layout = null;
-    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="title" content="Ask online Form">
-    <meta name="description" content="The Ask is a bootstrap design help desk, support forum website template coded and designed with bootstrap Design, Bootstrap, HTML5 and CSS. Ask ideal for wiki sites, knowledge base sites, support forum sites">
-    <meta name="keywords" content="HTML, CSS, JavaScript,Bootstrap,js,Forum,webstagram ,webdesign ,website ,web ,webdesigner ,webdevelopment">
-    <meta name="robots" content="index, nofollow">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="~/Content/css/loginstyle.css">
-
-
+    <style>
+        .modal-body {
+            background: white;
+            padding: 40px 100px;
+            box-shadow: 0px 50px 30px -30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 50px;
+            position: absolute;
+            top: 0;
+            display: none;
+            box-sizing: border-box;
+            width: 100%;
+            -webkit-transform-origin: top left;
+            transform-origin: top left;
+        }
+    </style>
 </head>
 
 <body>
-
     <div class="modal-wrap">
-
         <div class="modal-bodies">
             <div class="modal-body modal-body-step-1 is-showing">
                 <div class="title">Sign Up</div>
-                <div class="description">Hello there, Register Form</div>
-                <form>
-                    <input type="text" placeholder="Username*" />
-                    <input type="email" placeholder="E-Mail*" />
-                    <input type="password" placeholder="Password*" />
-                    <input type="con-password" placeholder="Confirm Password*" />
-                    <div class="col-md-4">
-                        <div class="row text-center sign-with">
-                            <div class="col-md-12">
-                                <h3>
-                                    Sign in with
-                                </h3>
-                            </div>
-                            <div class="col-md-12 sign-in28912">
-                                <div class="btn-group btn-group-justified">
-                                    <a href="#" class="btn btn-primary btn-primary3838">Facebook</a> <a href="#" class="btn btn-danger btn-danger37883">
-                                        Google
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                <div class="description">Join our community!</div>
+                @using (Html.BeginForm("Index", "Signup", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.username, "Username")
+                        @Html.TextBoxFor(m => m.username, new { @class = "form-control", placeholder = "Username*" })
+                        @Html.ValidationMessageFor(m => m.username, "", new { @class = "text-danger" })
                     </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.email, "Email")
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "E-Mail*" })
+                        @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.full_name, "Full name")
+                        @Html.TextBoxFor(m => m.full_name, new { @class = "form-control", placeholder = "Full name*" })
+                        @Html.ValidationMessageFor(m => m.full_name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.password, "Password")
+                        @Html.PasswordFor(m => m.password, new { @class = "form-control", placeholder = "Password*" })
+                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm password*" />
+                    </div>
+
                     <div class="text-center">
-                        <div class="button">Sign Up</div>
-
+                        <input type="submit" class="button" value="Sign Up" onclick="return validatePasswords()" />
                     </div>
-                </form>
+                }
             </div>
-
-
         </div>
     </div>
+
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function validatePasswords() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
 
-
-
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

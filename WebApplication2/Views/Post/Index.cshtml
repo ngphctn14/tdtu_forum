@@ -1,9 +1,12 @@
-﻿
+﻿@model WebApplication2.Models.post
+
 @{
-    ViewBag.Title = "New Post";
+    ViewBag.Title = "Post | New Post";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (Session["Username"] != null)
+{
     <section class="header-descriptin329">
         <div class="container" >
             <h3 style="color: white">@ViewBag.Title</h3>
@@ -20,40 +23,61 @@
                 <div class="ask-question-input-part032">
                       <h4>Create a new post</h4>
                  <hr>
-                    <form>
-                        <div class="question-title39">
-                            <span class="form-description433">Question-Title* </span><input type="text" name="fname" class="question-ttile32" placeholder="Write Your Question Title">
+                @using (Html.BeginForm("CreatePost", "Post", FormMethod.Post, new {id = "post-form", enctype = "multipart/form-data"}))
+                {
+                    @Html.AntiForgeryToken()
+                    <span class="form-description433">Question-Title*</span>
+                    <div class="question-title39">
+                        @Html.TextBoxFor(m => m.title, "", new {@class = "form-control", @placeholder = "Title" })
+                        <div id="comment-title-error" class="text-danger" style="display: none;">
+                            Post title cannot be empty.
                         </div>
-                        
-        <span class="form-description43305">Category* </span>
-        <label>
-            <select name="myBrowser" class="list-category53">
-                @{ Html.RenderAction("getDetailsSelect", "Category");}
-            </select>
-        </label>
-    <div class="button-group-addfile3239">
-        <span class="form-description23993">Attachment*</span><input type="file" name="ffile" class="question-ttile3226">
-        
-    </div>
-       <div class="details2-239">
-        <div class="col-md-12 nopadding">
-            <textarea id="txtEditor"></textarea> 
-        </div>
-                        </div>	
-                     
-</form>
-                 <div class="publish-button2389">
-                    <button type="button" class="publis1291">Publish your Question</button>
-                </div>
-               
+                    </div>
+
+                    <span class="form-description43305">Category*</span>
+                    <select name="category_id" class="list-category53" required>
+                        @{ Html.RenderAction("getDetailsSelect", "Category");}
+                    </select>
+
+                    <div>
+                        <h5 class="form-description433">Content*</h5>
+                    </div>
+                   <div class="details2-239">
+                        @Html.TextAreaFor(m => m.content, new { @id = "editor", @class = "form-control", @placeholder = "Content" })
+                    </div>	
+                    <div id="comment-error" class="text-danger" style="display: none;">
+                        Post content cannot be empty.
+                    </div>
+
+                    <div class="button-group-addfile3239">
+                        <span class="form-description23993">Attachments</span>
+                        <input type="file" name="attachments" multiple class="question-ttile3226">
+                    </div>
+
+                    <div class="publish-button2389">
+                        <button id="submit-button" type="submit" class="publis1291" onclick="return checkTitle()">Post</button>
+                    </div>
+                }
                 </div>
              
               
                 </div>
                 </div>
             </div>
-<!--                end of col-md-9 -->
-           
-<!--           strart col-md-3 (side bar)-->
     </section>
+    <script>
+        function checkTitle() {
+            const titleInput = document.getElementById('title');
+            const errorDiv = document.getElementById('comment-title-error');
 
+            if (titleInput.value === "") {
+                errorDiv.style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+    </script>
+} else
+{
+    <h2>You must log in to post</h2>
+}

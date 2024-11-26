@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ForumnManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ForumnManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="attachment">
           <Key>
             <PropertyRef Name="attachment_id" />
@@ -12,7 +12,6 @@
           <Property Name="attachment_id" Type="int" Nullable="false" />
           <Property Name="post_id" Type="int" />
           <Property Name="file_name" Type="varchar" MaxLength="255" />
-          <Property Name="file_path" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="category">
           <Key>
@@ -39,15 +38,6 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="comment_id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="NEWS">
-          <Key>
-            <PropertyRef Name="new_id" />
-          </Key>
-          <Property Name="new_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="new_title" Type="nvarchar(max)" />
-          <Property Name="new_description" Type="nvarchar(max)" />
-          <Property Name="new_datebegin" Type="smalldatetime" />
-        </EntityType>
         <EntityType Name="post">
           <Key>
             <PropertyRef Name="post_id" />
@@ -67,6 +57,13 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="post_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="role_name" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="user_id" />
@@ -78,6 +75,8 @@
           <Property Name="email" Type="varchar" MaxLength="50" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="last_login" Type="datetime" />
+          <Property Name="profile_picture" Type="varchar" MaxLength="255" />
+          <Property Name="role_id" Type="int" />
         </EntityType>
         <EntityType Name="user_followers">
           <Key>
@@ -203,6 +202,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__user__role_id__4D94879B">
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__user_foll__follo__30F848ED">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="user_followers" Type="Self.user_followers" Multiplicity="*" />
@@ -227,14 +238,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ForumnManagerModelStoreContainer">
           <EntitySet Name="attachment" EntityType="Self.attachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="comment_likes" EntityType="Self.comment_likes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_likes" EntityType="Self.post_likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_followers" EntityType="Self.user_followers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="welcome_home" EntityType="Self.welcome_home" Schema="dbo" store:Type="Tables" />
@@ -274,6 +316,10 @@
             <End Role="user" EntitySet="user" />
             <End Role="post_likes" EntitySet="post_likes" />
           </AssociationSet>
+          <AssociationSet Name="FK__user__role_id__4D94879B" Association="Self.FK__user__role_id__4D94879B">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
           <AssociationSet Name="FK__user_foll__follo__30F848ED" Association="Self.FK__user_foll__follo__30F848ED">
             <End Role="user" EntitySet="user" />
             <End Role="user_followers" EntitySet="user_followers" />
@@ -294,7 +340,6 @@
           <Property Name="attachment_id" Type="Int32" Nullable="false" />
           <Property Name="post_id" Type="Int32" />
           <Property Name="file_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="file_path" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="post" Relationship="Self.FK__attachmen__post___35BCFE0A" FromRole="attachment" ToRole="post" />
         </EntityType>
         <EntityType Name="category">
@@ -351,6 +396,9 @@
           <NavigationProperty Name="posts1" Relationship="Self.post_likes" FromRole="user" ToRole="post" />
           <NavigationProperty Name="user1" Relationship="Self.user_followers" FromRole="user" ToRole="user1" />
           <NavigationProperty Name="users" Relationship="Self.user_followers" FromRole="user1" ToRole="user" />
+          <Property Name="profile_picture" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="role_id" Type="Int32" />
+          <NavigationProperty Name="role" Relationship="ForumnManagerModel.FK__user__role_id__4D94879B" FromRole="user" ToRole="role" />
         </EntityType>
         <Association Name="FK__attachmen__post___35BCFE0A">
           <End Role="post" Type="Self.post" Multiplicity="0..1" />
@@ -463,7 +511,41 @@
             <End Role="user1" EntitySet="users" />
           </AssociationSet>
           <EntitySet Name="welcome_home" EntityType="ForumnManagerModel.welcome_home" />
-          <EntitySet Name="NEWS" EntityType="ForumnManagerModel.NEWS" />
+          <EntitySet Name="roles" EntityType="ForumnManagerModel.role" />
+          <AssociationSet Name="FK__user__role_id__4D94879B" Association="ForumnManagerModel.FK__user__role_id__4D94879B">
+            <End Role="role" EntitySet="roles" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ForumnManagerModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ForumnManagerModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <EntityType Name="welcome_home">
           <Key>
@@ -473,15 +555,37 @@
           <Property Name="welcome_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="NEWS">
+        <EntityType Name="role">
           <Key>
-            <PropertyRef Name="new_id" />
+            <PropertyRef Name="role_id" />
           </Key>
-          <Property Name="new_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="new_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="new_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="new_datebegin" Type="DateTime" Precision="0" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="role_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="users" Relationship="ForumnManagerModel.FK__user__role_id__4D94879B" FromRole="role" ToRole="user" />
         </EntityType>
+        <Association Name="FK__user__role_id__4D94879B">
+          <End Type="ForumnManagerModel.role" Role="role" Multiplicity="0..1" />
+          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -494,7 +598,6 @@
                 <ScalarProperty Name="attachment_id" ColumnName="attachment_id" />
                 <ScalarProperty Name="post_id" ColumnName="post_id" />
                 <ScalarProperty Name="file_name" ColumnName="file_name" />
-                <ScalarProperty Name="file_path" ColumnName="file_path" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -532,6 +635,8 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="ForumnManagerModel.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="profile_picture" ColumnName="profile_picture" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="full_name" ColumnName="full_name" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -575,16 +680,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NEWS">
-            <EntityTypeMapping TypeName="ForumnManagerModel.NEWS">
-              <MappingFragment StoreEntitySet="NEWS">
-                <ScalarProperty Name="new_datebegin" ColumnName="new_datebegin" />
-                <ScalarProperty Name="new_description" ColumnName="new_description" />
-                <ScalarProperty Name="new_title" ColumnName="new_title" />
-                <ScalarProperty Name="new_id" ColumnName="new_id" />
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="ForumnManagerModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ForumnManagerModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ForumnManagerModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ForumnManagerModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ForumnManagerModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ForumnManagerModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ForumnManagerModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ForumnManagerModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ForumnManagerModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ForumnManagerModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
