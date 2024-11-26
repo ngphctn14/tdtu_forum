@@ -37,7 +37,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Welcome</a>
+                <a class="navbar-brand" href="index.html" style="color: red; font-weight: 800">Welcome Admin</a>
+
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
@@ -67,22 +68,22 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="@Url.Action("Index","menus") "><i class="fa fa-dashboard fa-fw"></i> Quản lý Menu</a>
+                            <a href="@Url.Action("Index","categories") "><i class="fa fa-th-list fa-fw"></i> Category Management</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index","welcome_home") "><i class="fa fa-dashboard fa-fw"></i> Quản lý Tiêu đề</a>
+                            <a href="@Url.Action("Index","welcome_home") "><i class="fa fa-th-list fa-fw"></i> Notification Management</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index","users") "><i class="fa fa-th-list fa-fw"></i> Quản lý Người dùng</a>
+                            <a href="@Url.Action("Index","users") "><i class="fa fa-th-list fa-fw"></i>User Management</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index","posts") "><i class="fa fa-th-list fa-fw"></i> Quản lý Bài đăng</a>
+                            <a href="@Url.Action("Index","posts") "><i class="fa fa-th-list fa-fw"></i> Post Management</a>
                         </li>
-                        <li>
+                        @*<li>
                             <a href="@Url.Action("Index","cart") "><i class="fa fa-th-list fa-fw"></i> Quản lý Giỏ hàng</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index","contact") "><i class="fa fa-th-list fa-fw"></i> Quản lý Liên hệ</a>
+                            <a href="@Url.Action("Index","contact") "><i class="fa fa-th-list fa-fw"></i> Quản lý Liên hệ</a>*@
                         </li>
                         <!--<li>
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>

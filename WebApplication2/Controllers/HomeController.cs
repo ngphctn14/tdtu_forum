@@ -34,6 +34,7 @@ namespace WebApplication2.Controllers
         public ActionResult getHomeWelcome()
         {
             var v = from t in _db.welcome_home
+                    where t.hide == true
                     select t;
             return PartialView(v.ToList());
         }

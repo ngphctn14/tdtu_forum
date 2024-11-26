@@ -81,7 +81,7 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="full_name" Type="nvarchar" MaxLength="255" />
           <Property Name="username" Type="varchar" MaxLength="30" />
-          <Property Name="password" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" />
           <Property Name="email" Type="varchar" MaxLength="50" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="last_login" Type="datetime" />
@@ -102,6 +102,7 @@
           </Key>
           <Property Name="welcome_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="welcome_title" Type="nvarchar(max)" />
+          <Property Name="hide" Type="bit" />
           <Property Name="link" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK__attachmen__post___35BCFE0A">
@@ -416,7 +417,7 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="last_login" Type="DateTime" Precision="3" />
@@ -598,6 +599,38 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+<<<<<<< HEAD
+=======
+        <EntityType Name="welcome_home">
+          <Key>
+            <PropertyRef Name="welcome_id" />
+          </Key>
+          <Property Name="welcome_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="welcome_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hide" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="role_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="users" Relationship="ForumnManagerModel.FK__user__role_id__4D94879B" FromRole="role" ToRole="user" />
+        </EntityType>
+        <Association Name="FK__user__role_id__4D94879B">
+          <End Type="ForumnManagerModel.role" Role="role" Multiplicity="0..1" />
+          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+>>>>>>> d8f88691c4ebe4ad593750bd0092b00b77271998
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -722,6 +755,27 @@
               <ScalarProperty Name="user_id" ColumnName="user_id" />
             </EndProperty>
           </AssociationSetMapping>
+<<<<<<< HEAD
+=======
+          <EntitySetMapping Name="welcome_home">
+            <EntityTypeMapping TypeName="ForumnManagerModel.welcome_home">
+              <MappingFragment StoreEntitySet="welcome_home">
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="welcome_title" ColumnName="welcome_title" />
+                <ScalarProperty Name="welcome_id" ColumnName="welcome_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="ForumnManagerModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+>>>>>>> d8f88691c4ebe4ad593750bd0092b00b77271998
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ForumnManagerModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ForumnManagerModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ForumnManagerModel.Store.sp_dropdiagram" />

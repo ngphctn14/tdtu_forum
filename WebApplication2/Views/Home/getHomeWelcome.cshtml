@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<WebApplication2.Models.welcome_home>
 @foreach (var i in Model) {
-    <section class="welcome-part-one">
-    <div class="container">
+    
         <div class="welcome-demop102 text-center">
             <h2>@i.welcome_title</h2>
+            <a href="@i.link" style="color: white">@i.link</a>
         </div>
-    </div>
-</section> 
+    
 }
