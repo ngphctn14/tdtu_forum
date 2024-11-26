@@ -32,6 +32,8 @@ namespace WebApplication2.Models
         public string email { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
         public Nullable<System.DateTime> last_login { get; set; }
+        public string profile_picture { get; set; }
+        public Nullable<int> role_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<comment> comments { get; set; }
@@ -45,5 +47,6 @@ namespace WebApplication2.Models
         public virtual ICollection<user> user1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> users { get; set; }
+        public virtual role role { get; set; }
     }
 }

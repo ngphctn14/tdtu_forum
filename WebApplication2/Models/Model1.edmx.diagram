@@ -19,7 +19,8 @@
         <AssociationConnector Association="ForumnManagerModel.post_likes" ManuallyRouted="false" />
         <AssociationConnector Association="ForumnManagerModel.user_followers" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ForumnManagerModel.welcome_home" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ForumnManagerModel.NEWS" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ForumnManagerModel.role" Width="1.5" PointX="5.25" PointY="10.125" />
+        <AssociationConnector Association="ForumnManagerModel.FK__user__role_id__4D94879B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
