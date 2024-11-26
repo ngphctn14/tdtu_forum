@@ -71,7 +71,7 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="full_name" Type="nvarchar" MaxLength="255" />
           <Property Name="username" Type="varchar" MaxLength="30" />
-          <Property Name="password" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" />
           <Property Name="email" Type="varchar" MaxLength="50" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="last_login" Type="datetime" />
@@ -92,6 +92,7 @@
           </Key>
           <Property Name="welcome_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="welcome_title" Type="nvarchar(max)" />
+          <Property Name="hide" Type="bit" />
           <Property Name="link" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK__attachmen__post___35BCFE0A">
@@ -402,7 +403,7 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="last_login" Type="DateTime" Precision="3" />
@@ -570,6 +571,7 @@
           <Property Name="welcome_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="welcome_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hide" Type="Boolean" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -690,6 +692,7 @@
           <EntitySetMapping Name="welcome_home">
             <EntityTypeMapping TypeName="ForumnManagerModel.welcome_home">
               <MappingFragment StoreEntitySet="welcome_home">
+                <ScalarProperty Name="hide" ColumnName="hide" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="welcome_title" ColumnName="welcome_title" />
                 <ScalarProperty Name="welcome_id" ColumnName="welcome_id" />

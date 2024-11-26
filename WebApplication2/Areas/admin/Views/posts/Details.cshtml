@@ -47,53 +47,54 @@
     <div class="col-lg-12">
         <div class="panel panel-primary shadow-sm">
             <div class="panel-heading bg-primary text-white">
-                <h4 class="m-0 text-center"><strong>Chi tiết Bài Đăng</strong></h4>
+                <h4 class="m-0 text-center"><strong>Post's detail</strong></h4>
             </div>
             <div class="panel-body">
                 <dl class="dl-horizontal">
                     <dt>
-                        <strong>Tiêu đề</strong>
+                        <strong>Title</strong>
                     </dt>
                     <dd class="mb-3">
                         @Html.DisplayFor(model => model.title)
                     </dd>
 
                     <dt>
-                        <strong>Ngày đăng</strong>
+                        <strong>Date created</strong>
                     </dt>
                     <dd class="mb-3">
                         @Html.DisplayFor(model => model.created_at)
                     </dd>
 
                     <dt>
-                        <strong>Nội dung</strong>
+                        <strong>Content</strong>
                     </dt>
                     <dd class="mb-3">
                         @Html.Raw(Model.content)
                     </dd>
 
                     <dt>
-                        <strong>Thể loại</strong>
+                        <strong>Category</strong>
                     </dt>
                     <dd class="mb-3">
                         @Html.DisplayFor(model => model.category.name)
                     </dd>
 
                     <dt>
-                        <strong>Người đăng</strong>
+                        <strong>Author</strong>
                     </dt>
                     <dd class="mb-3">
                         @Html.DisplayFor(model => model.user.full_name)
                     </dd>
                 </dl>
 
-                <div class="text-center mt-4">
-                    <a href="@Url.Action("Edit", "posts", new { id = Model.post_id })" class="btn btn-warning btn-lg mx-2">
-                        <i class="fa fa-edit"></i> Chỉnh sửa
-                    </a>
+                <div class="text-left mt-4">
                     <a href="@Url.Action("Index", "posts")" class="btn btn-secondary btn-lg mx-2">
-                        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                        <i class="fa fa-arrow-left"></i> Back to list
                     </a>
+                    <a href="@Url.Action("Edit", "posts", new { id = Model.post_id })" class="btn btn-warning btn-lg mx-2">
+                        <i class="fa fa-edit"></i> Edit
+                    </a>
+                    
                 </div>
             </div>
         </div>

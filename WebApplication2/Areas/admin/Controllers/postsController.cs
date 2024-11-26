@@ -16,10 +16,28 @@ namespace WebApplication2.Areas.admin.Controllers
         private ForumnManagerEntities6 db = new ForumnManagerEntities6();
 
         // GET: admin/posts
-        public ActionResult Index()
+        public ActionResult Index(int? id = null)
         {
+            getCategory(id);  // Gọi phương thức getCategory để hiển thị danh mục trong dropdown
+
             var posts = db.posts.Include(p => p.category).Include(p => p.user);
-            return View(posts.ToList());
+            return View();
+        }
+        public void getCategory(int? selectedId = null)
+        {
+            // Lấy danh sách các danh mục không bị ẩn và sắp xếp theo tên
+            ViewBag.Category = new SelectList(db.categories.OrderBy(x => x.name), "category_id", "name", selectedId);
+        }
+
+        public ActionResult getPost(int? id)
+        {
+            if(id == null)
+            {
+                var v = db.posts.OrderBy(x => x.post_id).ToList();
+                return PartialView(v);
+            }
+            var m = db.posts.Where(x => x.category_id == id).OrderBy(x => x.post_id).ToList();
+            return PartialView(m);
         }
 
         // GET: admin/posts/Details/5

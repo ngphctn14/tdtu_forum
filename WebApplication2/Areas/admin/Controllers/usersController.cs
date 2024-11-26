@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using BCrypt.Net;
 using WebApplication2.Models;
 
 namespace WebApplication2.Areas.admin.Controllers
@@ -40,6 +41,10 @@ namespace WebApplication2.Areas.admin.Controllers
         {
             return View();
         }
+        public static string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
 
         // POST: admin/users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -50,13 +55,56 @@ namespace WebApplication2.Areas.admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    // Lấy giá trị user_id cao nhất hiện tại từ cơ sở dữ liệu
+                    int newUserId = db.users.Any() ? db.users.Max(p => p.user_id) + 1 : 1;
+
+                    // Gán giá trị user_id tự động
+                    user.user_id = newUserId;
+
+                    // Gán giá trị created_at là ngày hiện tại
+                    user.created_at = DateTime.Now;
+                    user.password = HashPassword(user.password);  // Băm mật khẩu
+
+                    user.last_login = null;
+
+                    db.users.Add(user);
+                    db.SaveChanges();  // Lưu thay đổi vào cơ sở dữ liệu
+                    return RedirectToAction("Index");  // Điều hướng đến trang Index nếu thành công
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                {
+                    // Tạo ngoại lệ mới để chứa thông tin chi tiết về lỗi
+                    Exception raise = dbEx;
+
+                    // Duyệt qua các lỗi validation của các thực thể
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            // Tạo thông báo chi tiết về lỗi
+                            string message = string.Format(
+                                "Entity: {0}, Property: {1}, Error: {2}",
+                                validationErrors.Entry.Entity.GetType().Name,  // Tên loại đối tượng
+                                validationError.PropertyName,                    // Tên thuộc tính có lỗi
+                                validationError.ErrorMessage                      // Thông báo lỗi
+                            );
+
+                            // Tạo một ngoại lệ mới và nest nó vào ngoại lệ hiện tại
+                            raise = new InvalidOperationException(message, raise);
+                        }
+                    }
+
+                    // Ném ngoại lệ mới có chứa thông tin chi tiết
+                    throw raise;
+                }
             }
 
-            return View(user);
+            return View(user);  // Trả lại view với thông tin lỗi nếu ModelState không hợp lệ
         }
+
+
 
         // GET: admin/users/Edit/5
         public ActionResult Edit(int? id)
@@ -123,5 +171,7 @@ namespace WebApplication2.Areas.admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
     }
 }

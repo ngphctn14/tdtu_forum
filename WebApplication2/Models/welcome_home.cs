@@ -17,5 +17,6 @@ namespace WebApplication2.Models
         public int welcome_id { get; set; }
         public string welcome_title { get; set; }
         public string link { get; set; }
+        public Nullable<bool> hide { get; set; }
     }
 }
