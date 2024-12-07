@@ -1,4 +1,22 @@
 ﻿@model IEnumerable<WebApplication2.Models.comment>
+@{
+    var url = @Url.Action("LikeComment", "Comment");
+}
+
+<style>
+    .comment-footer {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between; /* Ensures even spacing */
+        align-items: center; /* Aligns items vertically in the center */
+    }
+
+    .comment-date,
+    .comment-likes {
+        margin: 0; /* Remove any default margin to avoid unwanted spacing */
+    }
+
+</style>
 
 @foreach(var i in Model)
 {
@@ -25,11 +43,64 @@
                                     <div class="comment-head">
                                         <h6 class="comment-name"><a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">@i.user.username</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> @i.commented_at</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
                                     <div class="comment-content"> @Html.Raw(i.content) </div>
+                                    <div class="comment-footer">
+                                        <div class="comment-date">
+                                            @i.commented_at
+                                        </div>
+                                        <div class="comment-likes">
+                                            <i class="commentLikeBtn fa @(i.users.Any(u => u.user_id == Convert.ToInt32(Session["Id"])) ? "fa-thumbs-up" : "fa-thumbs-o-up")" data-id="@i.comment_id" data-url="@url" aria-hidden="true">
+                                            </i>
+                                            <a href="#">
+                                                <span class="comment-like-result fa commentLikesBtn" data-toggle="modal" data-target="#commentLikesModal">@i.users.Count Likes</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
             </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="commentLikesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Comment Likes</h5>
+                </div>
+                <div class="modal-body">
+                    @foreach (var j in i.users)
+                    {
+                        <div class="user-info-container">
+                            <div class="user-image2934">
+                                <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">
+                                    @if (!string.IsNullOrEmpty(j.profile_picture))
+                                    {
+                                        <img src="~/Uploads/Users/@j.user_id/@j.profile_picture" alt="Profile Picture">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                                    }
+                                </a>
+                            </div>
+                            <div class="user-username">
+                                <a href="@Url.Action("UserInfo", "User", new {id = j.user_id})">
+                                    @j.username
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <script>
+                        $('.commentLikesBtn').on('click', function () {
+                            $('#commentLikesModal').modal('show');
+                        });
+                    </script>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

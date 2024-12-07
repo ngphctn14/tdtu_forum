@@ -1,8 +1,8 @@
-﻿@model IEnumerable<WebApplication2.Models.welcome_home>
+﻿@model IEnumerable<WebApplication2.Models.notification>
 @foreach (var i in Model) {
     
         <div class="welcome-demop102 text-center">
-            <h2>@i.welcome_title</h2>
+            <h2>@i.notification_content</h2>
             <a href="@i.link" style="color: white">@i.link</a>
         </div>
     

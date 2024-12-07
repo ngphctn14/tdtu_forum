@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<WebApplication2.Models.category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Category Management";
     Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Category Management</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            Name
         </th>
         <th></th>
     </tr>

@@ -1,38 +1,46 @@
 ﻿@model IEnumerable<WebApplication2.Models.post>
+@using WebApplication2.Helpers
 
 @foreach (var i in Model)
 {
     <div class="question-type2033">
         <div class="row">
-            <div class="col-md-1">
-                <div class="left-user12923 left-user12923-repeat">
-                    <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">
-                        @if (!string.IsNullOrEmpty(i.user.profile_picture))
-                        {
-                            <img src="~/Uploads/Users/@i.user.user_id/@i.user.profile_picture" alt="Profile Picture">
-                        }
-                        else
-                        {
-                            <img src="~/Content/image/images.png" alt="Default Profile Picture">
-                        }
-                    </a>
-                    <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})" class="">@i.user.username</a>
-                </div>
-            </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="right-description893">
                     <div id="que-hedder2983">
                         <h3>
                             <a href="@Url.Action("PostDetails", "Post", new { id = i.post_id })" target="_blank">
-                                @i.title
+                                <b>@i.title</b>
                             </a>
                         </h3>
                     </div>
-
+                    <div class="ques-details10018">
+                        @Html.Raw(Clean.CleanContent(i.content))
+                    </div>
                     <hr>
                     <div class="ques-icon-info3293">
-                        <i class="fa fa-clock-o" aria-hidden="true"> @i.created_at</i>
-                        <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp; @i.category.name</i></a>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row-cols-1" style="padding:0px 0px 0px 15px">
+                                    <div class="left-user12923 left-user12923-repeat">
+                                        <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})">
+                                            @if (!string.IsNullOrEmpty(i.user.profile_picture))
+                                            {
+                                                <img src="~/Uploads/Users/@i.user.user_id/@i.user.profile_picture" alt="Profile Picture">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Content/image/images.png" alt="Default Profile Picture">
+                                            }
+                                        </a>
+                                        <a href="@Url.Action("UserInfo", "User", new {id = i.user_id})" class="">@i.user.username</a>
+                                        <i></i>
+                                        <i class="fa fa-clock-o" aria-hidden="true">&nbsp; @i.created_at</i>
+                                        <a href="@Url.Action("Index", "Category", new {id = i.category_id})"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp; @i.category.name</i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,10 +51,10 @@
                         <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> @i.comments.Count Comments</i></button>
 
                     </a>
-                    <button type="button" class="q-type23 button-ques2973 likesBtn" data-toggle="modal" data-target="#@String.Concat("likesByCategoryModal", i.post_id)">
+                    <button type="button" class="q-type23 button-ques2973 likesBtn" data-toggle="modal" data-target="#@String.Concat("likesRecentModal", i.post_id)">
                         <i class="fa fa-user-circle-o" aria-hidden="true"> @i.users.Count Likes</i>
                     </button>
-                    <div class="modal fade" id="@String.Concat("likesByCategoryModal", i.post_id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="@String.Concat("likesRecentModal", i.post_id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -77,7 +85,7 @@
                                     }
                                     <script>
                                     $('.likesBtn').on('click', function () {
-                                        $('#@String.Concat("likesByCategoryModal", i.post_id)').modal('show');
+                                        $('#@String.Concat("likesRecentModal", i.post_id)').modal('show');
                                     });
                                     </script>
                                 </div>

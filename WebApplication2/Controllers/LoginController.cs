@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +20,10 @@ namespace WebApplication2.Controllers
         {
             return View();
         }
+        public bool unhashPassword(string plainPassword, string hashedPassword)
+        {
+            return BCrypt.Net.BCrypt.Verify(plainPassword, hashedPassword);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -26,15 +31,19 @@ namespace WebApplication2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var _user = _db.users.Where(s => s.username.Equals(username) && s.password.Equals(password)).FirstOrDefault();
-                if (_user != null)
+                var user = _db.users.Where(s => s.username.Equals(username)).FirstOrDefault();
+                if (user != null && unhashPassword(password, user.password))
                 {
-                    Session["Id"] = _user.user_id;
-                    Session["Username"] = _user.username;
-                   _user.last_login = DateTime.Now;
-                    _db.SaveChanges();
+                    Session["Id"] = user.user_id;
+                    Session["Username"] = user.username;
+
+                    var sql = "UPDATE [user] SET last_login = @p0 WHERE user_id = @p1";
+                    _db.Database.ExecuteSqlCommand(sql, 
+                        DateTime.Now,
+                        user.user_id);
+
                     return RedirectToAction("Index", "Home");
-                } 
+                }
                 else
                 {
                     ViewBag.error = "Login failed";
@@ -43,7 +52,6 @@ namespace WebApplication2.Controllers
             }
             return View();
         }
-
         public ActionResult Logout()
         {
             Session.Clear();

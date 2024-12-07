@@ -34,7 +34,7 @@ namespace WebApplication2.Models
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<welcome_home> welcome_home { get; set; }
+        public virtual DbSet<notification> notifications { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

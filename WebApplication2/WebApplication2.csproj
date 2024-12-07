@@ -170,6 +170,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\Clean.cs" />
     <Compile Include="Models\attachment.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -194,6 +195,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\notification.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\post.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -210,9 +214,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\welcome_home.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -3735,7 +3736,12 @@
     <Content Include="Areas\admin\Views\posts\Details.cshtml" />
     <Content Include="Areas\admin\Views\posts\Edit.cshtml" />
     <Content Include="Areas\admin\Views\posts\Index.cshtml" />
-<<<<<<< HEAD
+    <Content Include="Areas\admin\Views\posts\getPost.cshtml" />
+    <Content Include="Areas\admin\Views\categories\Create.cshtml" />
+    <Content Include="Areas\admin\Views\categories\Delete.cshtml" />
+    <Content Include="Areas\admin\Views\categories\Details.cshtml" />
+    <Content Include="Areas\admin\Views\categories\Edit.cshtml" />
+    <Content Include="Areas\admin\Views\categories\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -3743,16 +3749,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-=======
-
-    <Content Include="Areas\admin\Views\posts\getPost.cshtml" />
-    <Content Include="Areas\admin\Views\categories\Create.cshtml" />
-    <Content Include="Areas\admin\Views\categories\Delete.cshtml" />
-    <Content Include="Areas\admin\Views\categories\Details.cshtml" />
-    <Content Include="Areas\admin\Views\categories\Edit.cshtml" />
-    <Content Include="Areas\admin\Views\categories\Index.cshtml" />
-
->>>>>>> d8f88691c4ebe4ad593750bd0092b00b77271998
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

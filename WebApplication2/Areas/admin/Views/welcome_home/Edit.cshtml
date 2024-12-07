@@ -1,4 +1,4 @@
-﻿@model WebApplication2.Models.welcome_home
+﻿@model WebApplication2.Models.notification
 
 @{
     ViewBag.Title = "Edit";
@@ -15,13 +15,13 @@
     <h4>welcome_home</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.welcome_id)
+    @Html.HiddenFor(model => model.notification_id)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.welcome_title, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.notification_content, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.welcome_title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.welcome_title, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.notification_content, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.notification_content, "", new { @class = "text-danger" })
         </div>
     </div>
 

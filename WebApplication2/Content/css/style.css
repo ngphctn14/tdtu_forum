@@ -487,7 +487,6 @@ hr {
 
 
 .left-user12923-repeat {
-    margin-top: 18px;
 }
 
 .left-user12923 .fa-check {
@@ -1633,14 +1632,13 @@ h5:hover {
     margin-top: 25px;
 }
 
-.post-que-rep-rihght320 a {
-    text-decoration: none;
-    background-color: #FF7361;
-    padding: 5px;
-    color: #fff;
-    
-    font-size: 12px;
-}
+    .post-que-rep-rihght320 a {
+        text-decoration: none;
+        background-color: #de0405;
+        padding: 5px;
+        color: #fff;
+        font-size: 12px;
+    }
 
 /*.post-details-info1982 {
     line-height: 1.5em;
@@ -2327,7 +2325,6 @@ h5:hover {
 
 .user-description3903 a {
     text-decoration: none;
-    color: #FF7361;
 }
 
 .badge229 a {

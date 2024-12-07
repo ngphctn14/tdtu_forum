@@ -7,8 +7,6 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
-
-
     public class CommentController : Controller
     {
 
@@ -26,6 +24,43 @@ namespace WebApplication2.Controllers
                     where comments.post_id == post_id
                     select comments;
             return PartialView(v.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult LikeComment(int comment_id)
+        {
+            int currentUserId = Convert.ToInt32(Session["Id"]);
+
+            var comment = _db.comments.Find(comment_id);
+            var user = _db.users.Find(currentUserId);
+
+            var existingLike = comment.users.Contains(user);
+
+            bool isLiked;
+
+            if (!existingLike)
+            {
+                comment.users.Add(user);
+
+                isLiked = true;
+            }
+            else
+            {
+                comment.users.Remove(user);
+
+                isLiked = false;
+            }
+
+            _db.SaveChanges();
+
+            int likeCount = comment.users.Count;
+
+            return Json(new
+            {
+                success = true,
+                isLiked = isLiked,
+                likeCount = likeCount
+            });
         }
 
         [HttpPost]

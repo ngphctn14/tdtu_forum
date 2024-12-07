@@ -17,7 +17,7 @@ namespace WebApplication2.Areas.admin.Controllers
         // GET: admin/welcome_home
         public ActionResult Index()
         {
-            return View(db.welcome_home.ToList());
+            return View(db.notifications.ToList());
         }
 
         // GET: admin/welcome_home/Details/5
@@ -27,12 +27,12 @@ namespace WebApplication2.Areas.admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            welcome_home welcome_home = db.welcome_home.Find(id);
-            if (welcome_home == null)
+            notification noti = db.notifications.Find(id);
+            if (noti == null)
             {
                 return HttpNotFound();
             }
-            return View(welcome_home);
+            return View(noti);
         }
 
         // GET: admin/welcome_home/Create
@@ -46,16 +46,16 @@ namespace WebApplication2.Areas.admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "welcome_id,welcome_title,link, hide")] welcome_home welcome_home)
+        public ActionResult Create([Bind(Include = "notification_id,notification_content,link, hide")] notification noti)
         {
             if (ModelState.IsValid)
             {
-                db.welcome_home.Add(welcome_home);
+                db.notifications.Add(noti);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(welcome_home);
+            return View(noti);
         }
 
         // GET: admin/welcome_home/Edit/5
@@ -65,12 +65,12 @@ namespace WebApplication2.Areas.admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            welcome_home welcome_home = db.welcome_home.Find(id);
-            if (welcome_home == null)
+            notification noti = db.notifications.Find(id);
+            if (noti == null)
             {
                 return HttpNotFound();
             }
-            return View(welcome_home);
+            return View(noti);
         }
 
         // POST: admin/welcome_home/Edit/5
@@ -78,15 +78,15 @@ namespace WebApplication2.Areas.admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "welcome_id,welcome_title,link, hide")] welcome_home welcome_home)
+        public ActionResult Edit([Bind(Include = "notification_id,notification_content,link, hide")] notification noti)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(welcome_home).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(noti).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(welcome_home);
+            return View(noti);
         }
 
         // GET: admin/welcome_home/Delete/5
@@ -96,12 +96,12 @@ namespace WebApplication2.Areas.admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            welcome_home welcome_home = db.welcome_home.Find(id);
-            if (welcome_home == null)
+            notification noti = db.notifications.Find(id);
+            if (noti == null)
             {
                 return HttpNotFound();
             }
-            return View(welcome_home);
+            return View(noti);
         }
 
         // POST: admin/welcome_home/Delete/5
@@ -109,8 +109,8 @@ namespace WebApplication2.Areas.admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            welcome_home welcome_home = db.welcome_home.Find(id);
-            db.welcome_home.Remove(welcome_home);
+            notification noti = db.notifications.Find(id);
+            db.notifications.Remove(noti);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

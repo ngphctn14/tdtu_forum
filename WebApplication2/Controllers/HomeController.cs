@@ -33,7 +33,7 @@ namespace WebApplication2.Controllers
         //Co gi vo sql them bang welcome_home
         public ActionResult getHomeWelcome()
         {
-            var v = from t in _db.welcome_home
+            var v = from t in _db.notifications
                     where t.hide == true
                     select t;
             return PartialView(v.ToList());

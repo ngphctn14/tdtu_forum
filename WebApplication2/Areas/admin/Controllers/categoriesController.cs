@@ -12,7 +12,7 @@ namespace WebApplication2.Areas.admin.Controllers
 {
     public class categoriesController : Controller
     {
-        private ForumnManagerEntities6 db = new ForumnManagerEntities6();
+        private ForumnManagerEntities7 db = new ForumnManagerEntities7();
 
         // GET: admin/categories
         public ActionResult Index()
@@ -50,6 +50,8 @@ namespace WebApplication2.Areas.admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var maxId = db.Database.SqlQuery<int>("SELECT ISNULL(MAX(category_id), 0) FROM [category]").First();
+                category.category_id = maxId + 1;
                 db.categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -1,4 +1,4 @@
-﻿@model WebApplication2.Models.welcome_home
+﻿@model WebApplication2.Models.notification
 
 @{
     ViewBag.Title = "Details";
@@ -12,11 +12,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.welcome_title)
+            @Html.DisplayNameFor(model => model.notification_content)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.welcome_title)
+            @Html.DisplayFor(model => model.notification_content)
         </dd>
 
         <dt>
@@ -30,6 +30,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.welcome_id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.notification_id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

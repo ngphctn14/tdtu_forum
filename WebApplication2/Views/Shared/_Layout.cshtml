@@ -38,6 +38,12 @@
             color: #333;
             line-height: normal;
         }
+
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Prevents potential layout issues */
+        }
     </style>
 </head>
 
@@ -71,10 +77,6 @@
                         <div class="text-center">
                             <form class="navbar-form" role="search">
                                 <div class="input-group add-on">
-                                    <input class="form-control form-control222" placeholder="Search" id="srch-term" type="text">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default btn-default2913" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -93,7 +95,7 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/Content/image/logo1.png" alt="Logo" style="width: 100px; height: 100px"></a>
-                    <a href="@Url.Action("Index", "Home")" style="font-weight: 700;color: #DE0405;font-family: 'Nunito',sans-serif;font-size: 18.5px; display:inline-block; margin-top:10px">TON DUC THANG UNIVERSITY</a>
+                    <a href="@Url.Action("Index", "Home")" style="font-weight: 700;color: #DE0405;font-family: 'Nunito',sans-serif;font-size: 18.5px; display:inline-block; margin-top:10px">FACULTY OF INFORMATION</a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -115,7 +117,7 @@
                             </ul>
                         </li>
                         <li><a href="@Url.Action("allUsers", "User")">Users</a></li>
-                        <li><a href="@Url.Action("Index", "Contact")">Contact us</a></li>
+                        <li><a href="@Url.Action("Index", "Contact")">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -\ijkk->
@@ -156,37 +158,98 @@
             Bold,
             Italic,
             Font,
-            Paragraph
+            Paragraph,
+            PasteFromOffice,
+            Image,
+            ImageInsert,
+            ImageUpload
         } = CKEDITOR;
+
+        class MyUploadAdapter {
+            constructor(loader) {
+                this.loader = loader;
+            }
+
+            upload() {
+                return this.loader.file
+                    .then(file => {
+                        return new Promise((resolve, reject) => {
+                            const formData = new FormData();
+                            formData.append('file', file);
+
+                            fetch('/Post/UploadImage', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => {
+                                if (!response.ok) { // Check for HTTP errors (e.g., 400, 500)
+                                    return response.json().then(err => { throw err; }); // Reject with the error message
+                                }
+                                return response.json();  // Parse the JSON response
+                            })
+                            .then(result => {
+                                 if (result.uploaded == 1) { // Check the uploaded status
+                                    resolve({ default: result.url });
+                                } else {
+                                    reject(result.error.message); // Reject with error message
+                                }
+                            })
+                            .catch(error => {
+                                reject(error.message ? error.message : "Image upload failed."); // Handle and reject any errors
+                            });
+                        });
+                    });
+            }
+
+            abort() {
+            }
+        }
+
+        // Upload adapter plugin
+        function MyUploadAdapterPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new MyUploadAdapter(loader);
+            };
+        }
 
         ClassicEditor
             .create(document.querySelector('#editor'), {
-                plugins: [Essentials, Bold, Italic, Font, Paragraph],
+                plugins: [
+                    Essentials, 
+                    Bold, 
+                    Italic, 
+                    Font, 
+                    Paragraph, 
+                    PasteFromOffice, 
+                    Image, 
+                    ImageInsert, 
+                    ImageUpload,
+                    MyUploadAdapterPlugin  // Add this plugin
+                ],
                 toolbar: [
                     'undo', 'redo', '|', 'bold', 'italic', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'insertImage'
                 ]
             })
             .then(newEditor => {
                 let editor = newEditor;
-
                 const form = document.getElementById('post-form');
                 if (form) {
                     form.addEventListener('submit', function (e) {
                         const editorContent = editor.getData().trim();
-
                         if (!editorContent || editorContent === '<p></p>' || editorContent === '<p>&nbsp;</p>') {
                             e.preventDefault();
                             document.getElementById('comment-error').style.display = 'block';
                             return false;
                         }
-
                         document.getElementById('comment-error').style.display = 'none';
                         document.querySelector('#editor').value = editorContent;
                     });
                 }
             })
-            .catch( /* ... */);
+            .catch(error => {
+                console.error(error);
+            });
 
         ClassicEditor
             .create(document.querySelector('#comment-editor'), {
@@ -252,11 +315,12 @@
     </script>
     <script>
         (function($){
-
             $('.likeBtn').click(function () {
                 var userId = @Session["Id"]+"";
                 var url = $(this).data('url');
-                var postId = $(this).data('id')
+                var postId = $(this).data('id');
+                var $likeButton = $(this);
+                var $likeCountSpan = $likeButton.siblings('.single-question-vote-result');
 
                 if (userId === 0) {
                     alert("You must log in to like post.");
@@ -271,11 +335,12 @@
                     },
                     success: function (result) {
                         if (result.success) {
-                            $('.single-question-vote-result').text(result.likeCount + ' Likes');
+                            $likeCountSpan.text(result.likeCount + ' Likes');
+
                             if (result.isLiked) {
-                                $('.fa-thumbs-o-up').removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+                                $likeButton.removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
                             } else {
-                                $('.fa-thumbs-up').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+                                $likeButton.removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
                             }
                         } else {
                             alert(result.message);
@@ -288,7 +353,173 @@
                 });
             });
 
-         })(jQuery); 
+            $('.commentLikeBtn').click(function () {
+                var userId = @Session["Id"]+"";
+                var url = $(this).data('url');
+                var commentId = $(this).data('id');
+                var $likeButton = $(this);
+                var $likeCountSpan = $likeButton.siblings('.comment-like-result');
+
+                if (userId === 0) {
+                    alert("You must log in to like comment.");
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        comment_id: commentId
+                    },
+                    success: function (result) {
+                        if (result.success) {
+                            $likeCountSpan.text(result.likeCount + ' Likes');
+                            if (result.isLiked) {
+                                $likeButton.removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+                            } else {
+                                $likeButton.removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+                            }
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', xhr.responseText);
+                        alert('An error occurred while processing your like.');
+                    }
+                });
+            });
+
+            $('#followUnfollowLink').click(function () {
+                var userId = $(this).data('user-id');
+                var action = $(this).text().trim().toLowerCase();
+
+                if (@Session["Id"] === 0) {
+                    alert("You must log in to follow/unfollow user.");
+                    return;
+                }
+
+                console.log(userId)
+                console.log(action)
+
+                $.ajax({
+                    url: '@Url.Action("ToggleFollow", "User")',
+                    type: 'POST',
+                    data: {
+                        userId: userId,
+                        action: action
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            followUnfollowLink.textContent = response.isFollowing ? 'Unfollow' : 'Follow';
+                            document.querySelector('[data-target="#followersModal"]').textContent = response.followersCount + ' Followers';
+                        }                        },
+                    error: function () {
+                        alert('Error toggling follow status');
+                    }
+                });
+            });
+
+            const form = document.getElementById('changePasswordForm');
+            const currentPasswordInput = document.getElementById('currentPassword');
+            const newPasswordInput = document.getElementById('newPassword');
+            const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+
+            const currentPasswordError = document.getElementById('currentPasswordError');
+            const newPasswordError = document.getElementById('newPasswordError');
+            const confirmNewPasswordError = document.getElementById('confirmNewPasswordError');
+
+            form.addEventListener('submit', function (e) {
+                currentPasswordError.textContent = '';
+                newPasswordError.textContent = '';
+                confirmNewPasswordError.textContent = '';
+
+                let isValid = true;
+
+                // Validate current password (this would typically involve an AJAX call)
+                if (currentPasswordInput.value.trim() === '') {
+                    currentPasswordError.textContent = 'Please enter your current password';
+                    isValid = false;
+                }
+
+                // Validate new password
+                if (newPasswordInput.value.length < 8) {
+                    newPasswordError.textContent = 'New password must be at least 8 characters long';
+                    isValid = false;
+                }
+
+                // Validate password match
+                if (newPasswordInput.value !== confirmNewPasswordInput.value) {
+                    confirmNewPasswordError.textContent = 'Passwords do not match';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    $.ajax({
+                        url: '@Url.Action("VerifyCurrentPassword", "User")',
+                        type: 'POST',
+                        data: {
+                            currentPassword: currentPasswordInput.value
+                        },
+                        success: function (response) {
+                            if (!response.isValid) {
+                                e.preventDefault();
+                                currentPasswordError.textContent = 'Current password is incorrect';
+                            }
+                        },
+                        error: function () {
+                            currentPasswordError.textContent = 'Error verifying password';
+                            e.preventDefault();
+                        }
+                    });
+                } else {
+                    e.preventDefault();
+                }
+            });
+
+            // Optional: Real-time validation as user types
+            newPasswordInput.addEventListener('input', function () {
+                if (this.value.length < 8) {
+                    newPasswordError.textContent = 'Password must be at least 8 characters long';
+                } else {
+                    newPasswordError.textContent = '';
+                }
+            });
+
+            confirmNewPasswordInput.addEventListener('input', function () {
+                if (this.value !== newPasswordInput.value) {
+                    confirmNewPasswordError.textContent = 'Passwords do not match';
+                } else {
+                    confirmNewPasswordError.textContent = '';
+                }
+            });
+
+            $("#editUserDetailsForm").validate({
+                rules: {
+                    full_name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    full_name: {
+                        required: "Please enter your full name",
+                        minlength: "Name must be at least 2 characters long"
+                    },
+                    email: {
+                        required: "Please enter your email address",
+                        email: "Please enter a valid email address"
+                    }
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+         })(jQuery);
     </script>
 
 </body>

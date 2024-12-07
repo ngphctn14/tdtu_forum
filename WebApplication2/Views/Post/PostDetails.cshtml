@@ -10,11 +10,11 @@
     
     <section class="header-descriptin329">
         <div class="container">
-            <h3>Post Details</h3>
+        <h3 style="color: white">Post Details</h3>
             <ol class="breadcrumb breadcrumb839">
                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                 <li><a href="#">Post Details</a></li>
-                <li class="">This Is My first Question</li>
+                <li class="" style="color: white">This Is My first Question</li>
             </ol>
         </div>
     </section>
@@ -27,7 +27,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="post-title-left129">
-                                        <h3>@Model.title</h3>
+                                        <h3><b>@Model.title</b></h3>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -37,8 +37,9 @@
                         </div>
                         <div class="post-details-info1982">
 
-                            @Html.Raw(Model.content)
-
+                            <div class="post-content">
+                                @Html.Raw(Model.content)
+                            </div>
                             <hr>
                             <div class="post-attachments">
                                 @if (Model.attachments != null && Model.attachments.Any())

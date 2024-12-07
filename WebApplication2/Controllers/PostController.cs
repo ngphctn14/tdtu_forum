@@ -218,6 +218,83 @@ namespace WebApplication2.Controllers
                 likeCount = likeCount
             });
         }
+
+        [HttpPost]
+        public ActionResult UploadImage(HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file == null || file.ContentLength == 0)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        error = "No file uploaded"
+                    });
+                }
+
+                // Validate file type (optional but recommended)
+                string[] allowedFileTypes = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+                string fileExtension = Path.GetExtension(file.FileName).ToLower();
+                if (!allowedFileTypes.Contains(fileExtension))
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        error = "Invalid file type. Allowed types: " + string.Join(", ", allowedFileTypes)
+                    });
+                }
+
+                // Validate file size (optional)
+                int maxFileSize = 5 * 1024 * 1024; // 5MB
+                if (file.ContentLength > maxFileSize)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        error = "File size cannot exceed 5MB"
+                    });
+                }
+
+                // Generate a unique filename
+                string fileName = Path.GetFileName(file.FileName);
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                // Define upload path 
+                string uploadFolder = Path.Combine(Server.MapPath("~/Uploads/Posts"));
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadFolder))
+                {
+                    Directory.CreateDirectory(uploadFolder);
+                }
+
+                // Full path for saving the file
+                string fullPath = Path.Combine(uploadFolder, uniqueFileName);
+
+                // Save the file
+                file.SaveAs(fullPath);
+
+                // Return JSON response
+                return Json(new
+                {
+                    uploaded = 1,  // Indicate successful upload
+                    fileName = uniqueFileName,
+                    error="bruh",
+                    url = Url.Content($"~/Uploads/Posts/{uniqueFileName}")
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception if possible
+                return Json(new
+                {
+                    success = false,
+                    error = "Upload failed: " + ex.Message
+                });
+            }
+        }
+
     }
 
 

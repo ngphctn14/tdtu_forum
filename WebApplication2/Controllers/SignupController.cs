@@ -14,6 +14,11 @@ namespace WebApplication2.Controllers
         {
             return View();
         }
+        public static string hashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -23,6 +28,8 @@ namespace WebApplication2.Controllers
             {
                 var checkEmail = _db.users.FirstOrDefault(s => s.email == user_.email);
                 var checkUsername = _db.users.FirstOrDefault(s => s.username == user_.username);
+
+                user_.password = hashPassword(user_.password);
 
                 Console.WriteLine(checkEmail == null);
                 Console.WriteLine(checkUsername == null);

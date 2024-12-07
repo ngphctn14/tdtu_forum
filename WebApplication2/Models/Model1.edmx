@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ForumnManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ForumnManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="attachment">
           <Key>
             <PropertyRef Name="attachment_id" />
@@ -38,12 +38,21 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="comment_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="notification_content" Type="nvarchar(max)" />
+          <Property Name="hide" Type="bit" />
+          <Property Name="link" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="post">
           <Key>
             <PropertyRef Name="post_id" />
           </Key>
           <Property Name="post_id" Type="int" Nullable="false" />
-          <Property Name="title" Type="varchar" MaxLength="255" />
+          <Property Name="title" Type="nvarchar(max)" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="content" Type="text" />
           <Property Name="user_id" Type="int" />
@@ -81,7 +90,7 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="full_name" Type="nvarchar" MaxLength="255" />
           <Property Name="username" Type="varchar" MaxLength="30" />
-          <Property Name="password" Type="nvarchar" MaxLength="255" />
+          <Property Name="password" Type="nvarchar(max)" />
           <Property Name="email" Type="varchar" MaxLength="50" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="last_login" Type="datetime" />
@@ -95,15 +104,6 @@
           </Key>
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="follower_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="welcome_home">
-          <Key>
-            <PropertyRef Name="welcome_id" />
-          </Key>
-          <Property Name="welcome_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="welcome_title" Type="nvarchar(max)" />
-          <Property Name="hide" Type="bit" />
-          <Property Name="link" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK__attachmen__post___35BCFE0A">
           <End Role="post" Type="Self.post" Multiplicity="0..1" />
@@ -285,13 +285,13 @@
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="comment_likes" EntityType="Self.comment_likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification" EntityType="Self.notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_likes" EntityType="Self.post_likes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_followers" EntityType="Self.user_followers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="welcome_home" EntityType="Self.welcome_home" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__attachmen__post___35BCFE0A" Association="Self.FK__attachmen__post___35BCFE0A">
             <End Role="post" EntitySet="post" />
             <End Role="attachment" EntitySet="attachment" />
@@ -341,8 +341,7 @@
             <End Role="user_followers" EntitySet="user_followers" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ForumnManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -381,7 +380,7 @@
             <PropertyRef Name="post_id" />
           </Key>
           <Property Name="post_id" Type="Int32" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="user_id" Type="Int32" />
@@ -417,7 +416,7 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="last_login" Type="DateTime" Precision="3" />
@@ -430,14 +429,6 @@
           <NavigationProperty Name="posts1" Relationship="Self.post_likes" FromRole="user" ToRole="post" />
           <NavigationProperty Name="user1" Relationship="Self.user_followers" FromRole="user" ToRole="user1" />
           <NavigationProperty Name="users" Relationship="Self.user_followers" FromRole="user1" ToRole="user" />
-        </EntityType>
-        <EntityType Name="welcome_home">
-          <Key>
-            <PropertyRef Name="welcome_id" />
-          </Key>
-          <Property Name="welcome_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="welcome_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__attachmen__post___35BCFE0A">
           <End Role="post" Type="Self.post" Multiplicity="0..1" />
@@ -531,7 +522,6 @@
           <EntitySet Name="roles" EntityType="Self.role" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="users" EntityType="Self.user" />
-          <EntitySet Name="welcome_home" EntityType="Self.welcome_home" />
           <AssociationSet Name="FK__attachmen__post___35BCFE0A" Association="Self.FK__attachmen__post___35BCFE0A">
             <End Role="post" EntitySet="posts" />
             <End Role="attachment" EntitySet="attachments" />
@@ -598,39 +588,8 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="notifications" EntityType="ForumnManagerModel.notification" />
         </EntityContainer>
-<<<<<<< HEAD
-=======
-        <EntityType Name="welcome_home">
-          <Key>
-            <PropertyRef Name="welcome_id" />
-          </Key>
-          <Property Name="welcome_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="welcome_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="hide" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="role">
-          <Key>
-            <PropertyRef Name="role_id" />
-          </Key>
-          <Property Name="role_id" Type="Int32" Nullable="false" />
-          <Property Name="role_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="users" Relationship="ForumnManagerModel.FK__user__role_id__4D94879B" FromRole="role" ToRole="user" />
-        </EntityType>
-        <Association Name="FK__user__role_id__4D94879B">
-          <End Type="ForumnManagerModel.role" Role="role" Multiplicity="0..1" />
-          <End Type="ForumnManagerModel.user" Role="user" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="role">
-              <PropertyRef Name="role_id" />
-            </Principal>
-            <Dependent Role="user">
-              <PropertyRef Name="role_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
->>>>>>> d8f88691c4ebe4ad593750bd0092b00b77271998
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -642,6 +601,15 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="notification_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -722,15 +690,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="welcome_home">
-            <EntityTypeMapping TypeName="ForumnManagerModel.welcome_home">
-              <MappingFragment StoreEntitySet="welcome_home">
-                <ScalarProperty Name="welcome_id" ColumnName="welcome_id" />
-                <ScalarProperty Name="welcome_title" ColumnName="welcome_title" />
-                <ScalarProperty Name="link" ColumnName="link" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="comment_likes" TypeName="ForumnManagerModel.comment_likes" StoreEntitySet="comment_likes">
             <EndProperty Name="comment">
               <ScalarProperty Name="comment_id" ColumnName="comment_id" />
@@ -755,27 +714,6 @@
               <ScalarProperty Name="user_id" ColumnName="user_id" />
             </EndProperty>
           </AssociationSetMapping>
-<<<<<<< HEAD
-=======
-          <EntitySetMapping Name="welcome_home">
-            <EntityTypeMapping TypeName="ForumnManagerModel.welcome_home">
-              <MappingFragment StoreEntitySet="welcome_home">
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="welcome_title" ColumnName="welcome_title" />
-                <ScalarProperty Name="welcome_id" ColumnName="welcome_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="ForumnManagerModel.role">
-              <MappingFragment StoreEntitySet="role">
-                <ScalarProperty Name="role_name" ColumnName="role_name" />
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
->>>>>>> d8f88691c4ebe4ad593750bd0092b00b77271998
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ForumnManagerModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ForumnManagerModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ForumnManagerModel.Store.sp_dropdiagram" />
@@ -800,6 +738,16 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ForumnManagerModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ForumnManagerModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="notifications">
+            <EntityTypeMapping TypeName="ForumnManagerModel.notification">
+              <MappingFragment StoreEntitySet="notification">
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="notification_content" ColumnName="notification_content" />
+                <ScalarProperty Name="notification_id" ColumnName="notification_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
